@@ -20,5 +20,11 @@ npm run build
 npm run build --report
 ```
 
+## Useful tools
+
+- [Blender](https://www.blender.org/)
+- [blender-to-three-plugin](https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender)
+
 ## Credits to
+
 - [A series of Blender tutorial video.](http://blender.freemovies.co.uk/stickman/)
