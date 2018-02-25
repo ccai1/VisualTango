@@ -19,7 +19,7 @@ export default {
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000)
-    camera.position.set(0, 10, 15)
+    camera.position.set(0, 0, 15)
     camera.lookAt(scene.position)
 
     const renderer = new THREE.WebGLRenderer({ antialias : true })
@@ -27,10 +27,13 @@ export default {
     document.body.appendChild(renderer.domElement)
 
     const loader = new THREE.JSONLoader()
-    loader.load('static/model/stickmale.json', (geometry) => {
-      let material = new THREE.MeshBasicMaterial({ color: 0x0080ff })
-      let mesh = new THREE.Mesh(geometry, material)
-      scene.add(mesh)
+    loader.load('static/model/stickman.json', (geometry) => {
+      let male = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0x0080ff }))
+      let female = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xff0080 }))
+      scene.add(male)
+      scene.add(female)
+      male.position.set(5, 0, 0)
+      female.position.set(-5, 0, 0)
     })
 
     let animate = function () {
