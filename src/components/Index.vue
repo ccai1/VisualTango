@@ -27,26 +27,11 @@ export default {
     document.body.appendChild(renderer.domElement)
 
     const loader = new THREE.JSONLoader()
-    loader.load(
-      // file path
-      'static/model/stickmale.json', 
-      
-      // onLoad
-      (geometry) => {
-        let mesh = new THREE.Mesh(geometry)
-        scene.add(mesh)
-      },
-
-      // onProcess
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded')
-      },
-
-      // onError
-      (err) => {
-        console.log('[ERROR] when loading model file: ', err)
-      }
-    )
+    loader.load('static/model/stickmale.json', (geometry) => {
+      let material = new THREE.MeshBasicMaterial({ color: 0x0080ff })
+      let mesh = new THREE.Mesh(geometry, material)
+      scene.add(mesh)
+    })
 
     let animate = function () {
       requestAnimationFrame(animate)
