@@ -12,19 +12,18 @@ export default {
   name: 'VisualTango',
   data () {
     return {
-      canvas: '<div></div>'
     }
   },
   mounted () {
     const scene = new THREE.Scene()
 
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000)
-    camera.position.set(0, 0, 15)
+    camera.position.set(10, 10, 15)
     camera.lookAt(scene.position)
 
     const renderer = new THREE.WebGLRenderer({ antialias : true })
     renderer.setSize(window.innerWidth * 0.9, window.innerHeight * 0.9)
-    document.body.appendChild(renderer.domElement)
+    this.$el.appendChild(renderer.domElement)
 
     const loader = new THREE.JSONLoader()
     loader.load('static/model/stickman.json', (geometry) => {
