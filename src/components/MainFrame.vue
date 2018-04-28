@@ -7,6 +7,7 @@
 /* eslint-disable */
 // load THREE.js
 import * as THREE from 'three'
+const OrbitControls = require('three-orbit-controls')(THREE);
 
 export default {
   data () {
@@ -26,6 +27,9 @@ export default {
     const renderer = new THREE.WebGLRenderer({ antialias : true })
     renderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
     this.$el.appendChild(renderer.domElement)
+
+    const control = new OrbitControls(camera, renderer.domElement)
+    control.update()
 
     let mixer, set
     let clock = new THREE.Clock()
@@ -59,6 +63,7 @@ export default {
         mixer.update(clock.getDelta())
       }
       requestAnimationFrame(animate)
+      control.update()
       renderer.render(scene, camera)
     }
 
