@@ -31,14 +31,14 @@ export default {
     let clock = new THREE.Clock()
 
     // add a plane as floor
-    let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8);
+    let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8)
     let groundMaterial = new THREE.MeshBasicMaterial({
       color: 0x5f9ea0,
       side: THREE.DoubleSide
-    });
-    let ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotateX( - Math.PI / 2);
-    scene.add(ground);
+    })
+    let ground = new THREE.Mesh(groundGeometry, groundMaterial)
+    ground.rotateX( - Math.PI / 2)
+    scene.add(ground)
 
     // add stickman model
     const loader = new THREE.JSONLoader()
