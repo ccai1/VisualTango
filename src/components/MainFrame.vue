@@ -15,13 +15,9 @@ export default {
   },
   mounted () {
     const scene = new THREE.Scene()
-    // add axis for debugging
-    // x is red, y is green, z is blue
-    const axesHelper = new THREE.AxesHelper(10)
-    scene.add(axesHelper)
 
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000)
-    camera.position.set(10, 10, 10)
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 50)
+    camera.position.set(0, 10, 25)
     camera.lookAt(scene.position) // look at 0, 0, 0
 
     const renderer = new THREE.WebGLRenderer({ antialias : true })
@@ -34,28 +30,35 @@ export default {
     let mixer, set
     let clock = new THREE.Clock()
 
+    // add a plane as floor
+    let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8);
+    let groundMaterial = new THREE.MeshBasicMaterial({
+      color: 0x5f9ea0,
+      side: THREE.DoubleSide
+    });
+    let ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotateX( - Math.PI / 2);
+    scene.add(ground);
+
+    // add stickman model
     const loader = new THREE.JSONLoader()
-    loader.load('static/model/stickman_animated.json', (geometry) => {
-      let male = new THREE.SkinnedMesh(geometry, 
+    loader.load('static/model/stickman.json', (geometry) => {
+      let female = new THREE.SkinnedMesh(geometry, 
         new THREE.MeshBasicMaterial({ 
-          color: 0x0080ff,
+          color: 0xff0080,
           skinning: true
         })
       )
-      // let female = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xff0080 }))
-      scene.add(male)
-      // scene.add(female)
-      // console.log(male.position)
-      // male.position.set(3, 0, -6)
-      // female.position.set(-3, 0, -6)
+      scene.add(female)
 
-      mixer = new THREE.AnimationMixer(male)
-      let clips = geometry.animations
-      let walkingClip = clips[0]
-      let walkCycle = mixer.clipAction(walkingClip)
-      walkCycle.play()
+      // mixer = new THREE.AnimationMixer(female)
+      // let clips = geometry.animations
+      // console.log(clips.length)
+      // let walkingClip = clips[0]
+      // let walkCycle = mixer.clipAction(walkingClip)
+      // walkCycle.play()
 
-      set = true
+      // set = true
     })
 
     let animate = function () {
