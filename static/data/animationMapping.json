@@ -1,0 +1,11 @@
+{
+  "STANDING" : 0,
+  "POSITION_LOW" : {
+    "FACING_NORTH" : {
+      "RIGHT_WEIGHTED" : {
+        "COLLECTED" : 1
+      }
+    }
+  },
+  "POSITION_HIGH" : {}
+}
