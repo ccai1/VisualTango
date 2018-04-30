@@ -14,11 +14,11 @@
       :learning="card.learning"
     >
     </Card>
-    <Card v-if="inserting"
+    <Card v-if="this.inserting"
       type="card"
       :initialized="false"
       :onAddingNewSubmit="this.addCard"
-      :onAddingNewCancel="onClickAddNewCancel"
+      :onAddingNewCancel="this.onClickAddNewCancel"
     ></Card>
     <Card v-else @click.native="onClickAddNew()"></Card>
     <br /><br />
@@ -29,29 +29,21 @@
 import Card from './Card.vue'
 
 export default {
-  data () {
-    return {
-      inserting: false // a flag to indicate if user is inserting a new card
-    }
-  },
   props: [
     // a list of cards
     'cards',
 
-    // pass in from parent
+    // modify card list
     'addCard',
-    'removeCard'
+    'removeCard',
+
+    // open and close add new panel
+    'inserting', // flag
+    'onClickAddNew',
+    'onClickAddNewCancel'
   ],
   components: {
     'Card': Card
-  },
-  methods: {
-    onClickAddNew () {
-      this.inserting = true
-    },
-    onClickAddNewCancel () {
-      this.inserting = false
-    }
   }
 }
 </script>

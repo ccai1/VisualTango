@@ -5,6 +5,9 @@
       :cards="this.cards"
       :addCard="addCard"
       :removeCard="removeCard"
+      :inserting="this.inserting"
+      :onClickAddNewCancel="onClickAddNewCancel"
+      :onClickAddNew="onClickAddNew"
     ></SidePanel>
   </div>
 </template>
@@ -16,7 +19,8 @@ import MainFrame from './MainFrame.vue'
 export default {
   data () {
     return {
-      cards: []
+      cards: [],
+      inserting: false
     }
   },
   components: {
@@ -36,6 +40,7 @@ export default {
         unweighted: unweighted,
         learning: learning
       })
+      this.inserting = false
     },
     // remove a card by index
     removeCard (index) {
@@ -57,6 +62,12 @@ export default {
         // insert element back
         this.cards.splice(insertAfter + 1, 0, element)
       }
+    },
+    onClickAddNew () {
+      this.inserting = true
+    },
+    onClickAddNewCancel () {
+      this.inserting = false
     }
   }
 }
