@@ -8,7 +8,10 @@
       <strong>height:</strong> <br />
       <strong>weighted:</strong> <br />
       <strong>unweighted:</strong> wrapped around front leg<br />
-      <strong>learning:</strong>
+      <strong>learning:</strong><br />
+
+      <button style="border: 0px; background-color: #DC143C">remove</button>
+      <br />
     </div>
   </div>
   <div v-else-if="type === 'card' && initialized && !expended"
@@ -60,8 +63,14 @@
       </select>
       <br />
 
-      <button style="border: 0px; background-color: #228B22">confirm</button>
-      <button style="border: 0px; background-color: #FFD700">cancel</button>
+      <button
+        style="border: 0px; background-color: #228B22"
+        @click="onAddingNewSubmit()"
+      >submit</button>
+      <button
+        style="border: 0px; background-color: #FFD700"
+        @click="onAddingNewCancel()"
+      >cancel</button>
       <br />
     </div>
   </div>
@@ -80,12 +89,18 @@ export default {
     'type', // card or add new
     'initialized', // true or false
     'expended', // true or false
+
+    // pose description
     'direction', // north, northwest, northeast
     'height', // high or low
     'weighted', // left or right
     'unweighted', // collected, crossed forward, forward, backward, in air forward
     // in air backward, slide out, wrapped around front leg
-    'learning' // neutral, forward, backward, towards weighted, towards unweighted
+    'learning', // neutral, forward, backward, towards weighted, towards unweighted
+
+    // submit and cancel buttons handlers for adding new card
+    'onAddingNewSubmit',
+    'onAddingNewCancel'
   ]
 }
 </script>

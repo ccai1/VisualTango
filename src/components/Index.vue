@@ -1,7 +1,11 @@
 <template>
   <div class="index">
     <MainFrame></MainFrame>
-    <SidePanel></SidePanel>
+    <SidePanel
+      :cards="this.cards"
+      :addCard="addCard"
+      :removeCard="removeCard"
+    ></SidePanel>
   </div>
 </template>
 
@@ -10,11 +14,50 @@ import SidePanel from './SidePanel.vue'
 import MainFrame from './MainFrame.vue'
 
 export default {
-  props: {
+  data () {
+    return {
+      cards: []
+    }
   },
   components: {
     'SidePanel': SidePanel,
     'MainFrame': MainFrame
+  },
+  methods: {
+    // add a new card element to the list
+    addCard (direction, height, weighted, unweighted, learning) {
+      this.cards.push({
+        type: 'card',
+        initialized: true,
+        expended: false,
+        direction: direction,
+        height: height,
+        weighted: weighted,
+        unweighted: unweighted,
+        learning: learning
+      })
+    },
+    // remove a card by index
+    removeCard (index) {
+      if (index >= 0 && index <= this.cards.length - 1) {
+        this.cards.splice(index, 1)
+      }
+    },
+    // change the index of a card
+    insertCardAfter (index, after) {
+      if (index !== after && index >= 0 && index <= this.cards.length - 1 && after >= 0 && after <= this.cards.length - 1) {
+        let element = this.cards[index]
+        // remove item index
+        this.cards.splice(index, 1)
+        let insertAfter = after
+        // check if index is before 'after'
+        if (index < after) {
+          insertAfter -= 1
+        }
+        // insert element back
+        this.cards.splice(insertAfter + 1, 0, element)
+      }
+    }
   }
 }
 </script>
