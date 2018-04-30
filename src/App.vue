@@ -19,4 +19,12 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+canvas {
+  position: relative;
+  width: 98%;
+  height: 98%;
+  border-radius: inherit;
+  left: 1px;
+  top: 1px;
+}
 </style>

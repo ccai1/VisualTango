@@ -110,10 +110,7 @@ export default {
   height: 98%;
   background-color: #000000;
   float: right;
-}
-canvas {
-  position: relative;
-  width: 100%;
-  height: 100%
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px 1px;
 }
 </style>
