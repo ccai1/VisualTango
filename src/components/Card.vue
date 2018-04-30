@@ -24,48 +24,44 @@
   >
     <div style="text-align: left; padding-left: 5px">
       <strong>direction:</strong>
-      <select>
-        <option value="north">north</option>
-        <option value="northwest">northwest</option>
-        <option value="northeast">northeast</option>
+      <select v-model="selected.direction">
+        <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>height:</strong>
-      <select>
-        <option value="north">north</option>
-        <option value="northwest">northwest</option>
-        <option value="northeast">northeast</option>
+      <select v-model="selected.height">
+        <option v-for="opts in selectOptions.height" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>weighted:</strong>
-      <select>
-        <option value="north">north</option>
-        <option value="northwest">northwest</option>
-        <option value="northeast">northeast</option>
+      <select v-model="selected.weighted">
+        <option v-for="opts in selectOptions.weighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>unweighted:</strong>
-      <select>
-        <option value="north">north</option>
-        <option value="northwest">northwest</option>
-        <option value="northeast">northeast</option>
+      <select v-model="selected.unweighted">
+        <option v-for="opts in selectOptions.unweighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>learning:</strong>
-      <select>
-        <option value="north">north</option>
-        <option value="northwest">northwest</option>
-        <option value="northeast">northeast</option>
+      <select v-model="selected.learning">
+        <option v-for="opts in selectOptions.learning" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <button
         style="border: 0px; background-color: #228B22"
-        @click="onAddingNewSubmit()"
+        @click="onAddingNewSubmit(
+          selected.direction,
+          selected.heighted,
+          selected.weighted,
+          selected.unweighted,
+          selected.learning
+        )"
       >submit</button>
       <button
         style="border: 0px; background-color: #FFD700"
@@ -84,6 +80,50 @@
 
 <script>
 export default {
+  data () {
+    return {
+      // dropdowns for adding a new card
+      selected: {
+        direction: 'north',
+        height: 'high',
+        weighted: 'left',
+        unweighted: 'collected',
+        learning: 'neutral'
+      },
+      selectOptions: {
+        direction: [
+          'north',
+          'northwest',
+          'northeast'
+        ],
+        height: [
+          'high',
+          'low'
+        ],
+        weighted: [
+          'left',
+          'right'
+        ],
+        unweighted: [
+          'collected',
+          'crossed-forward',
+          'forward',
+          'backward',
+          'in-air-forward',
+          'in-air-backward',
+          'slide-out-side',
+          'wrapped-around-front'
+        ],
+        learning: [
+          'neutral',
+          'forward',
+          'backward',
+          'toward-weighted',
+          'toward-unweighted'
+        ]
+      }
+    }
+  },
   props: [
     'title',
     'type', // card or add new
