@@ -1,22 +1,27 @@
 <template>
   <div class="side-panel">
-    <Card v-for="(card, index) in this.cards"
-      :key="index"
-      :index="index"
-      :id="'card-' + index"
-      :title="'pose - ' + (index+1)"
-      :type="card.type"
-      :initialized="card.initialized"
-      :expended="card.expended"
-      :direction="card.direction"
-      :height="card.height"
-      :weighted="card.weighted"
-      :unweighted="card.unweighted"
-      :learning="card.learning"
-      :removeCard="removeCard"
-      :expendCard="expendCard"
-    >
-    </Card>
+    <!-- a list of cards -->
+    <Dragglable v-model="this.cards">
+      <Card v-for="(card, index) in this.cards"
+        :key="index"
+        :index="index"
+        :id="'card-' + index"
+        :title="card.title"
+        :type="card.type"
+        :initialized="card.initialized"
+        :expended="card.expended"
+        :direction="card.direction"
+        :height="card.height"
+        :weighted="card.weighted"
+        :unweighted="card.unweighted"
+        :learning="card.learning"
+        :removeCard="removeCard"
+        :expendCard="expendCard"
+      >
+      </Card>
+    </Dragglable>
+
+    <!-- inserting a new card -->
     <Card v-if="this.inserting"
       type="card"
       :initialized="false"
@@ -30,6 +35,7 @@
 
 <script>
 import Card from './Card.vue'
+import Dragglable from 'vuedraggable'
 
 export default {
   props: [
@@ -49,7 +55,8 @@ export default {
     'expendCard'
   ],
   components: {
-    'Card': Card
+    'Card': Card,
+    'Dragglable': Dragglable
   }
 }
 </script>

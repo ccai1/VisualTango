@@ -24,6 +24,9 @@
     class="card"
   >
     <div style="text-align: left; padding-left: 5px">
+      <strong>title:</strong>
+      <input type="text" v-model="name" />
+
       <strong>direction:</strong>
       <select v-model="selected.direction">
         <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
@@ -57,6 +60,7 @@
       <button
         style="border: 0px; background-color: #228B22"
         @click="onAddingNewSubmit(
+          name,
           selected.direction,
           selected.heighted,
           selected.weighted,
@@ -83,6 +87,8 @@
 export default {
   data () {
     return {
+      // title of this card
+      name: '',
       // dropdowns for adding a new card
       selected: {
         direction: 'north',

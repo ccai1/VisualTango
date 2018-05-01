@@ -31,9 +31,10 @@ export default {
   },
   methods: {
     // add a new card element to the list
-    addCard (direction, height, weighted, unweighted, learning) {
+    addCard (name, direction, height, weighted, unweighted, learning) {
       this.cards.push({
         type: 'card',
+        title: name,
         initialized: true,
         expended: false,
         direction: direction,
