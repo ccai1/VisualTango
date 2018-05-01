@@ -16,12 +16,37 @@
 <script>
 import SidePanel from './SidePanel.vue'
 import MainFrame from './MainFrame.vue'
+import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 
 export default {
   data () {
     return {
       cards: [],
       inserting: false
+    }
+  },
+  mounted () {
+    // see if cookie is enabled
+    try {
+      if (isCookieEnabled()) {
+        let previousData = JSON.parse(getCookie('cards'))
+        if (previousData instanceof Array) {
+          // set data
+          this.cards = previousData
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  beforeUpdate () {
+    // update to cookie
+    try {
+      if (isCookieEnabled()) {
+        setCookie('cards', JSON.stringify(this.cards))
+      }
+    } catch (err) {
+      console.log(err)
     }
   },
   components: {
