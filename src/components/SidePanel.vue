@@ -1,9 +1,9 @@
 <template>
   <div class="side-panel">
     <!-- a list of cards -->
-    <Dragglable v-model="this.cards">
+    <Dragglable v-model="this.cards" :list="this.cards">
       <Card v-for="(card, index) in this.cards"
-        :key="index"
+        :key="card.title"
         :index="index"
         :id="'card-' + index"
         :title="card.title"
