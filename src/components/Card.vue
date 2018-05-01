@@ -4,11 +4,11 @@
   >
     <strong>{{ this.title }}</strong><br />
     <div style="text-align: left; padding-left: 5px">
-      <strong>direction:</strong> dfsaf<br />
-      <strong>height:</strong> <br />
-      <strong>weighted:</strong> <br />
-      <strong>unweighted:</strong> wrapped around front leg<br />
-      <strong>learning:</strong><br />
+      <strong>direction:</strong> {{ this.direction }}<br />
+      <strong>height:</strong> {{ this.height }}<br />
+      <strong>weighted:</strong> {{ this.weighted }}<br />
+      <strong>unweighted:</strong> {{ this.unweighted }}<br />
+      <strong>learning:</strong> {{ this.learning }}<br />
 
       <button style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
