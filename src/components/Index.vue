@@ -8,6 +8,7 @@
       :inserting="this.inserting"
       :onClickAddNewCancel="onClickAddNewCancel"
       :onClickAddNew="onClickAddNew"
+      :toggleCard="toggleCard"
     ></SidePanel>
   </div>
 </template>
@@ -20,7 +21,8 @@ export default {
   data () {
     return {
       cards: [],
-      inserting: false
+      inserting: false,
+      currentExpended: -1 // the current expended card
     }
   },
   components: {
@@ -68,6 +70,18 @@ export default {
     },
     onClickAddNewCancel () {
       this.inserting = false
+    },
+    toggleCard (index) {
+      if (index === this.currentExpended) {
+        this.cards[index].expended = false
+        this.currentExpended = -1
+      } else {
+        if (this.currentExpended !== -1) {
+          this.cards[this.currentExpended].expended = false
+        }
+        this.cards[index].expended = true
+        this.currentExpended = index
+      }
     }
   }
 }

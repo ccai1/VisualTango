@@ -11,7 +11,7 @@
       <strong>learning:</strong><br />
 
       <button style="border: 0px; background-color: #DC143C">remove</button>
-      <br />
+      <br /><br />
     </div>
   </div>
   <div v-else-if="type === 'card' && initialized && !expended"
@@ -67,7 +67,7 @@
         style="border: 0px; background-color: #FFD700"
         @click="onAddingNewCancel()"
       >cancel</button>
-      <br />
+      <br /><br />
     </div>
   </div>
   <div v-else

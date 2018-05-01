@@ -12,6 +12,7 @@
       :weighted="card.weighted"
       :unweighted="card.unweighted"
       :learning="card.learning"
+      @click.native="toggleCard(index)"
     >
     </Card>
     <Card v-if="this.inserting"
@@ -40,7 +41,10 @@ export default {
     // open and close add new panel
     'inserting', // flag
     'onClickAddNew',
-    'onClickAddNewCancel'
+    'onClickAddNewCancel',
+
+    // expending
+    'toggleCard'
   ],
   components: {
     'Card': Card
