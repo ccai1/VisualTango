@@ -21,8 +21,7 @@ export default {
   data () {
     return {
       cards: [],
-      inserting: false,
-      currentExpended: -1 // the current expended card
+      inserting: false
     }
   },
   components: {
@@ -44,12 +43,11 @@ export default {
         learning: learning
       })
       this.inserting = false
+      this.expendCard(this.cards.length - 1)
     },
     // remove a card by index
     removeCard (index) {
       if (index >= 0 && index <= this.cards.length - 1) {
-        this.cards[this.currentExpended].expended = false
-        this.currentExpended = -1
         this.cards.splice(index, 1)
       }
     },
@@ -75,11 +73,12 @@ export default {
       this.inserting = false
     },
     expendCard (index) {
-      if (this.currentExpended !== -1) {
-        this.cards[this.currentExpended].expended = false
+      if (index >= 0 && index < this.cards.length) {
+        for (let i = 0; i < this.cards.length; i++) {
+          this.cards[i].expended = false
+        }
+        this.cards[index].expended = true
       }
-      this.cards[index].expended = true
-      this.currentExpended = index
     }
   }
 }
