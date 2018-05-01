@@ -62,7 +62,7 @@
         @click="onAddingNewSubmit(
           name,
           selected.direction,
-          selected.heighted,
+          selected.height,
           selected.weighted,
           selected.unweighted,
           selected.learning
