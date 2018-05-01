@@ -26,6 +26,7 @@
     <div style="text-align: left; padding-left: 5px">
       <strong>title:</strong>
       <input type="text" v-model="name" />
+      <br />
 
       <strong>direction:</strong>
       <select v-model="selected.direction">
