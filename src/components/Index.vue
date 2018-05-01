@@ -8,7 +8,7 @@
       :inserting="this.inserting"
       :onClickAddNewCancel="onClickAddNewCancel"
       :onClickAddNew="onClickAddNew"
-      :toggleCard="toggleCard"
+      :expendCard="expendCard"
     ></SidePanel>
   </div>
 </template>
@@ -47,6 +47,8 @@ export default {
     // remove a card by index
     removeCard (index) {
       if (index >= 0 && index <= this.cards.length - 1) {
+        this.cards[this.currentExpended].expended = false
+        this.currentExpended = -1
         this.cards.splice(index, 1)
       }
     },
@@ -71,17 +73,12 @@ export default {
     onClickAddNewCancel () {
       this.inserting = false
     },
-    toggleCard (index) {
-      if (index === this.currentExpended) {
-        this.cards[index].expended = false
-        this.currentExpended = -1
-      } else {
-        if (this.currentExpended !== -1) {
-          this.cards[this.currentExpended].expended = false
-        }
-        this.cards[index].expended = true
-        this.currentExpended = index
+    expendCard (index) {
+      if (this.currentExpended !== -1) {
+        this.cards[this.currentExpended].expended = false
       }
+      this.cards[index].expended = true
+      this.currentExpended = index
     }
   }
 }

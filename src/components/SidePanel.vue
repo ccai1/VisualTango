@@ -2,6 +2,7 @@
   <div class="side-panel">
     <Card v-for="(card, index) in this.cards"
       :key="index"
+      :index="index"
       :id="'card-' + index"
       :title="'pose - ' + (index+1)"
       :type="card.type"
@@ -12,7 +13,8 @@
       :weighted="card.weighted"
       :unweighted="card.unweighted"
       :learning="card.learning"
-      @click.native="toggleCard(index)"
+      :removeCard="removeCard"
+      :expendCard="expendCard"
     >
     </Card>
     <Card v-if="this.inserting"
@@ -44,7 +46,7 @@ export default {
     'onClickAddNewCancel',
 
     // expending
-    'toggleCard'
+    'expendCard'
   ],
   components: {
     'Card': Card

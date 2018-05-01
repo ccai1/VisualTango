@@ -10,12 +10,13 @@
       <strong>unweighted:</strong> wrapped around front leg<br />
       <strong>learning:</strong><br />
 
-      <button style="border: 0px; background-color: #DC143C">remove</button>
+      <button style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
     </div>
   </div>
   <div v-else-if="type === 'card' && initialized && !expended"
     class="card"
+    @click="expendCard(index)"
   >
     {{ this.title }}
   </div>
@@ -125,6 +126,7 @@ export default {
     }
   },
   props: [
+    'index',
     'title',
     'type', // card or add new
     'initialized', // true or false
@@ -140,7 +142,13 @@ export default {
 
     // submit and cancel buttons handlers for adding new card
     'onAddingNewSubmit',
-    'onAddingNewCancel'
+    'onAddingNewCancel',
+
+    // expend a card
+    'expendCard',
+
+    // remove button
+    'removeCard'
   ]
 }
 </script>
