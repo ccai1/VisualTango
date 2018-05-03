@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    <input ref="upload" type="file" style="display: none" @change="onChangeUpload" />
     <div class="floating-button-set">
       <RoundButton
         type="play"
@@ -19,6 +20,7 @@
       ></RoundButton>
       <RoundButton
         type="upload"
+        :onClickHandler="handleUploadButton"
       ></RoundButton>
     </div>
     <MainFrame></MainFrame>
@@ -42,6 +44,7 @@ import MainFrame from './MainFrame.vue'
 import RoundButton from './RoundButton.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import { download } from '../helper/fileHelper'
+import axios from 'axios'
 
 export default {
   data () {
@@ -147,6 +150,29 @@ export default {
     },
     handleDownloadButton () {
       download('poses', this.cards)
+    },
+    handleUploadButton () {
+      this.$refs.upload.click()
+    },
+    onChangeUpload (event) {
+      let files = event.target.files || event.dataTransfer.files
+      if (files.length === 1) {
+        let reader = new FileReader()
+        reader.onload = (e) => {
+          let uri = e.target.result
+          axios.get(uri).then((res) => {
+            let data = res.data
+            if (data instanceof Array) {
+              this.cards = data
+            }
+          }).catch((err) => {
+            console.log(err)
+          })
+        }
+        reader.readAsDataURL(files[0])
+      } else {
+        console.log('length of files is not 1')
+      }
     }
   }
 }
