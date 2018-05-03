@@ -10,13 +10,14 @@
       <strong>unweighted:</strong> {{ this.unweighted }}<br />
       <strong>learning:</strong> {{ this.learning }}<br />
 
-      <button style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
+      <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
     </div>
   </div>
   <div v-else-if="type === 'card' && initialized && !expended"
     class="card"
     @click="expendCard(index)"
+    style="cursor: pointer"
   >
     {{ this.title }}
   </div>
@@ -59,6 +60,7 @@
       <br />
 
       <button
+        class="card-button"
         style="border: 0px; background-color: #228B22"
         @click="onAddingNewSubmit(
           name,
@@ -70,6 +72,7 @@
         )"
       >submit</button>
       <button
+        class="card-button"
         style="border: 0px; background-color: #FFD700"
         @click="onAddingNewCancel()"
       >cancel</button>
@@ -78,7 +81,7 @@
   </div>
   <div v-else
     class="card"
-    style="color: gray"
+    style="color: gray; cursor: pointer;"
   >
     + add new
   </div>
@@ -170,5 +173,11 @@ export default {
   background-color: #FFEBCD;
   box-shadow: 0px 0px 5px 1px gray;
   border-radius: 3px;
+}
+.card-button {
+  border-radius: 3px;
+  box-shadow: 0px 0px 1px 1px gray;
+  margin: 3px;
+  cursor: pointer;
 }
 </style>

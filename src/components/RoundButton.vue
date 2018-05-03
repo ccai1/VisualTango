@@ -1,45 +1,46 @@
 <template>
-<a @click="this.onClickHandler()" style="text-decoration:none;">
-  <div class="round-button"
+<a @click="onClickHandler()" style="text-decoration:none;">
+  <div v-if="this.type === 'play'"
+    class="round-button"
     :style="{
-      backgroundColor: this.backgroundColor
+      backgroundColor: '#32CD32'
     }"
-  ><span class="button-text">{{ this.content }}</span></div>
+  ><span class="button-text">P</span></div>
+  <div v-else-if="this.type === 'typing' && this.enableTyping && this.enableTyping === true"
+    class="round-button"
+    :style="{
+      backgroundColor: '#7FFFD4'
+    }"
+  ><span class="button-text">T</span></div>
+  <div v-else-if="this.type === 'typing'"
+    class="round-button"
+    :style="{
+      backgroundColor: '#A9A9A9'
+    }"
+  ><span class="button-text">T</span></div>
+  <div v-else-if="this.type === 'clear'"
+    class="round-button"
+    :style="{
+      backgroundColor: '#DC143C'
+    }"
+  ><span class="button-text">C</span></div>
+  <div v-else-if="this.type === 'download'"
+    class="round-button"
+    :style="{
+      backgroundColor: '#00008B'
+    }"
+  ><span class="button-text">D</span></div>
+  <div v-else
+    class="round-button"
+    :style="{
+      backgroundColor: '#B8860B'
+    }"
+  ><span class="button-text">U</span></div>
 </a>
 </template>
 
 <script>
 export default {
-  data () {
-    let bgColor = ''
-    let ctt = ''
-
-    if (this.type === 'play') {
-      bgColor = '#32CD32'
-      ctt = 'P'
-    } else if (this.type === 'typing') {
-      if (this.enableTyping && this.enableTyping === true) {
-        bgColor = '#FFFFFF'
-      } else {
-        bgColor = '#A9A9A9'
-      }
-      ctt = 'T'
-    } else if (this.type === 'clear') {
-      bgColor = '#DC143C'
-      ctt = 'C'
-    } else if (this.type === 'download') {
-      bgColor = '#00008B'
-      ctt = 'D'
-    } else { // upload
-      bgColor = '#B8860B'
-      ctt = 'U'
-    }
-
-    return {
-      backgroundColor: bgColor,
-      content: ctt
-    }
-  },
   props: [
     // play, typing, clear, download, upload
     'type',
@@ -61,6 +62,7 @@ export default {
   box-shadow: 0px 0px 5px 1px gray;
   border-radius: 50%;
   margin: 8px;
+  cursor: pointer;
 }
 .button-text {
   position: relative;

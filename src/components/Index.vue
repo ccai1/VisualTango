@@ -1,5 +1,25 @@
 <template>
   <div class="index">
+    <div class="floating-button-set">
+      <RoundButton
+        type="play"
+      ></RoundButton>
+      <RoundButton
+        type="typing"
+        :enableTyping="this.enableTyping"
+        :onClickHandler="handleTypingButton"
+      ></RoundButton>
+      <RoundButton
+        type="clear"
+        :onClickHandler="handleClearButton"
+      ></RoundButton>
+      <RoundButton
+        type="download"
+      ></RoundButton>
+      <RoundButton
+        type="upload"
+      ></RoundButton>
+    </div>
     <MainFrame></MainFrame>
     <SidePanel
       :cards="this.cards"
@@ -16,13 +36,15 @@
 <script>
 import SidePanel from './SidePanel.vue'
 import MainFrame from './MainFrame.vue'
+import RoundButton from './RoundButton.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 
 export default {
   data () {
     return {
       cards: [],
-      inserting: false
+      inserting: false,
+      enableTyping: false
     }
   },
   mounted () {
@@ -51,7 +73,8 @@ export default {
   },
   components: {
     'SidePanel': SidePanel,
-    'MainFrame': MainFrame
+    'MainFrame': MainFrame,
+    'RoundButton': RoundButton
   },
   methods: {
     // add a new card element to the list
@@ -104,6 +127,13 @@ export default {
         }
         this.cards[index].expended = true
       }
+    },
+    // button handlers
+    handleClearButton () {
+      this.cards = []
+    },
+    handleTypingButton () {
+      this.enableTyping = !this.enableTyping
     }
   }
 }
@@ -120,5 +150,12 @@ export default {
   height: 100%;
   width: 100%;
   background-color: #A9A9A9;
+}
+.floating-button-set {
+  position: absolute;
+  float: left;
+  z-index: 999;
+  top: 2%;
+  left: 22.8%;
 }
 </style>
