@@ -29,6 +29,7 @@
       :onClickAddNewCancel="onClickAddNewCancel"
       :onClickAddNew="onClickAddNew"
       :expendCard="expendCard"
+      :enableTyping="this.enableTyping"
     ></SidePanel>
   </div>
 </template>
@@ -79,6 +80,8 @@ export default {
   methods: {
     // add a new card element to the list
     addCard (name, direction, height, weighted, unweighted, learning) {
+      // TODO add validation methods
+
       this.cards.push({
         type: 'card',
         title: name,

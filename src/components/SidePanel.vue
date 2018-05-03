@@ -27,6 +27,7 @@
       :initialized="false"
       :onAddingNewSubmit="this.addCard"
       :onAddingNewCancel="this.onClickAddNewCancel"
+      :enableTyping="this.enableTyping"
     ></Card>
     <Card v-else @click.native="onClickAddNew()"></Card>
     <br /><br />
@@ -52,7 +53,11 @@ export default {
     'onClickAddNewCancel',
 
     // expending
-    'expendCard'
+    'expendCard',
+
+    // a flag whether typing is enabled
+    // if it is enabled, then all the dropdowns need to be typing
+    'enableTyping'
   ],
   components: {
     'Card': Card,

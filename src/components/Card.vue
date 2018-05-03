@@ -30,31 +30,36 @@
       <br />
 
       <strong>direction:</strong>
-      <select v-model="selected.direction">
+      <input v-if="this.enableTyping" type="text" v-model="selected.direction" />
+      <select v-else v-model="selected.direction">
         <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>height:</strong>
-      <select v-model="selected.height">
+      <input v-if="this.enableTyping" type="text" v-model="selected.height" />
+      <select v-else v-model="selected.height">
         <option v-for="opts in selectOptions.height" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>weighted:</strong>
-      <select v-model="selected.weighted">
+      <input v-if="this.enableTyping" type="text" v-model="selected.weighted" />
+      <select v-else v-model="selected.weighted">
         <option v-for="opts in selectOptions.weighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>unweighted:</strong>
-      <select v-model="selected.unweighted">
+      <input v-if="this.enableTyping" type="text" v-model="selected.unweighted" />
+      <select v-else v-model="selected.unweighted">
         <option v-for="opts in selectOptions.unweighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
       <strong>learning:</strong>
-      <select v-model="selected.learning">
+      <input v-if="this.enableTyping" type="text" v-model="selected.learning" />
+      <select v-else v-model="selected.learning">
         <option v-for="opts in selectOptions.learning" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
@@ -89,6 +94,13 @@
 
 <script>
 export default {
+  beforeUpdate () {
+    this.selected.direction = this.enableTyping ? '' : 'north'
+    this.selected.height = this.enableTyping ? '' : 'high'
+    this.selected.weighted = this.enableTyping ? '' : 'left'
+    this.selected.unweighted = this.enableTyping ? '' : 'collected'
+    this.selected.learning = this.enableTyping ? '' : 'neutral'
+  },
   data () {
     return {
       // title of this card
@@ -158,7 +170,10 @@ export default {
     'expendCard',
 
     // remove button
-    'removeCard'
+    'removeCard',
+
+    // typing flag
+    'enableTyping'
   ]
 }
 </script>
