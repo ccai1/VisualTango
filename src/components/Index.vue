@@ -15,6 +15,7 @@
       ></RoundButton>
       <RoundButton
         type="download"
+        :onClickHandler="handleDownloadButton"
       ></RoundButton>
       <RoundButton
         type="upload"
@@ -40,6 +41,7 @@ import SidePanel from './SidePanel.vue'
 import MainFrame from './MainFrame.vue'
 import RoundButton from './RoundButton.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
+import { download } from '../helper/fileHelper'
 
 export default {
   data () {
@@ -133,6 +135,9 @@ export default {
         this.cards[index].expended = true
       }
     },
+    updateDelay (index, value) {
+      this.cards[index].delay = value
+    },
     // button handlers
     handleClearButton () {
       this.cards = []
@@ -140,8 +145,8 @@ export default {
     handleTypingButton () {
       this.enableTyping = !this.enableTyping
     },
-    updateDelay (index, value) {
-      this.cards[index].delay = value
+    handleDownloadButton () {
+      download('poses', this.cards)
     }
   }
 }
