@@ -9,6 +9,7 @@
       <strong>weighted:</strong> {{ this.weighted }}<br />
       <strong>unweighted:</strong> {{ this.unweighted }}<br />
       <strong>learning:</strong> {{ this.learning }}<br />
+      <strong>delay:</strong> <input type="text" :value="this.timeDelay" @change="onChangeDelay" /> sec<br />
 
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
@@ -64,6 +65,10 @@
       </select>
       <br />
 
+      <strong>delay:</strong>
+      <input type="text" v-model="delay" /> sec
+      <br />
+
       <button
         class="card-button"
         style="border: 0px; background-color: #228B22"
@@ -73,7 +78,8 @@
           selected.height,
           selected.weighted,
           selected.unweighted,
-          selected.learning
+          selected.learning,
+          delay
         )"
       >submit</button>
       <button
@@ -105,6 +111,8 @@ export default {
     return {
       // title of this card
       name: '',
+      // time delay for a new card
+      delay: '',
       // dropdowns for adding a new card
       selected: {
         direction: 'north',
@@ -173,8 +181,18 @@ export default {
     'removeCard',
 
     // typing flag
-    'enableTyping'
-  ]
+    'enableTyping',
+
+    // time delay for a initialized card
+    'timeDelay',
+    // a callback to update delay
+    'updateDelay'
+  ],
+  methods: {
+    onChangeDelay (event) {
+      this.updateDelay(this.index, event.target.value)
+    }
+  }
 }
 </script>
 

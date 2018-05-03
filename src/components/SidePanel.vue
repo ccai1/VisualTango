@@ -3,7 +3,7 @@
     <!-- a list of cards -->
     <Dragglable v-model="this.cards" :list="this.cards">
       <Card v-for="(card, index) in this.cards"
-        :key="card.title"
+        :key="index"
         :index="index"
         :id="'card-' + index"
         :title="card.title"
@@ -15,8 +15,10 @@
         :weighted="card.weighted"
         :unweighted="card.unweighted"
         :learning="card.learning"
+        :timeDelay="card.delay"
         :removeCard="removeCard"
         :expendCard="expendCard"
+        :updateDelay="updateDelay"
       >
       </Card>
     </Dragglable>
@@ -57,7 +59,10 @@ export default {
 
     // a flag whether typing is enabled
     // if it is enabled, then all the dropdowns need to be typing
-    'enableTyping'
+    'enableTyping',
+
+    // update delay
+    'updateDelay'
   ],
   components: {
     'Card': Card,

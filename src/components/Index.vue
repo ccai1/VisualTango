@@ -30,6 +30,7 @@
       :onClickAddNew="onClickAddNew"
       :expendCard="expendCard"
       :enableTyping="this.enableTyping"
+      :updateDelay="updateDelay"
     ></SidePanel>
   </div>
 </template>
@@ -79,7 +80,7 @@ export default {
   },
   methods: {
     // add a new card element to the list
-    addCard (name, direction, height, weighted, unweighted, learning) {
+    addCard (name, direction, height, weighted, unweighted, learning, delay) {
       // TODO add validation methods
 
       this.cards.push({
@@ -91,7 +92,8 @@ export default {
         height: height,
         weighted: weighted,
         unweighted: unweighted,
-        learning: learning
+        learning: learning,
+        delay: delay
       })
       this.inserting = false
       this.expendCard(this.cards.length - 1)
@@ -137,6 +139,9 @@ export default {
     },
     handleTypingButton () {
       this.enableTyping = !this.enableTyping
+    },
+    updateDelay (index, value) {
+      this.cards[index].delay = value
     }
   }
 }
