@@ -4,6 +4,7 @@
     <div class="floating-button-set">
       <RoundButton
         type="play"
+        :onClickHandler="handlePlayButton"
       ></RoundButton>
       <RoundButton
         type="typing"
@@ -23,7 +24,7 @@
         :onClickHandler="handleUploadButton"
       ></RoundButton>
     </div>
-    <MainFrame></MainFrame>
+    <MainFrame :playFrame="this.playFrame"></MainFrame>
     <SidePanel
       :cards="this.cards"
       :addCard="addCard"
@@ -44,6 +45,7 @@ import MainFrame from './MainFrame.vue'
 import RoundButton from './RoundButton.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import { download } from '../helper/fileHelper'
+import { validateCard, matchFrameIndex } from '../helper/cardHelper'
 import axios from 'axios'
 
 export default {
@@ -51,7 +53,13 @@ export default {
     return {
       cards: [],
       inserting: false,
-      enableTyping: false
+      enableTyping: false,
+
+      // playing
+      playing: false,
+      currentCard: 0,
+      clock: (new Date()).getTime(), // millieseconds since 1970-1-1
+      playFrame: 0
     }
   },
   mounted () {
@@ -86,9 +94,7 @@ export default {
   methods: {
     // add a new card element to the list
     addCard (name, direction, height, weighted, unweighted, learning, delay) {
-      // TODO add validation methods
-
-      this.cards.push({
+      let card = {
         type: 'card',
         title: name,
         initialized: true,
@@ -99,9 +105,13 @@ export default {
         unweighted: unweighted,
         learning: learning,
         delay: delay
-      })
-      this.inserting = false
-      this.expendCard(this.cards.length - 1)
+      }
+      // validate
+      if (validateCard(card)) {
+        this.cards.push(card)
+        this.inserting = false
+        this.expendCard(this.cards.length - 1)
+      }
     },
     // remove a card by index
     removeCard (index) {
@@ -125,7 +135,9 @@ export default {
       }
     },
     onClickAddNew () {
-      this.inserting = true
+      if (!this.playing) {
+        this.inserting = true
+      }
     },
     onClickAddNewCancel () {
       this.inserting = false
@@ -139,9 +151,54 @@ export default {
       }
     },
     updateDelay (index, value) {
-      this.cards[index].delay = value
+      if (!this.playing) {
+        this.cards[index].delay = value
+      }
     },
     // button handlers
+    handlePlayButton () {
+      // set playing flag and counter
+      if (this.cards.length > 0) {
+        this.playing = true
+        this.currentCard = 0
+        this.inserting = false
+        // start playing
+        let play = () => {
+          // get the delay of the current card
+          let currentDelay = parseFloat(this.cards[this.currentCard].delay)
+          // convert into millieseconds
+          let currentDelayMilli = currentDelay * 1000
+          // get current time
+          let currentClock = (new Date()).getTime()
+          if (currentClock - this.clock >= currentDelayMilli) { // should end this card
+            if (this.currentCard + 1 === this.cards.length) {
+              // end playing
+              console.log('play end')
+              this.playing = false
+              this.playFrame = 0
+            } else {
+              // go to the next card
+              this.currentCard += 1
+              // reset timer
+              this.clock = (new Date()).getTime()
+              this.playFrame = matchFrameIndex(this.cards[this.currentCard])
+              console.log('play card: ', this.currentCard)
+              setTimeout(play, 1)
+            }
+          } else {
+            // continue with the current card
+            setTimeout(play, 1)
+          }
+        }
+
+        // go!
+        console.log('start play')
+        this.clock = (new Date()).getTime() // set the first timer
+        this.playFrame = matchFrameIndex(this.cards[this.currentCard])
+        console.log('play card: ', this.currentCard)
+        play()
+      }
+    },
     handleClearButton () {
       this.cards = []
     },
@@ -149,10 +206,14 @@ export default {
       this.enableTyping = !this.enableTyping
     },
     handleDownloadButton () {
-      download('poses', this.cards)
+      if (!this.playing) {
+        download('poses', this.cards)
+      }
     },
     handleUploadButton () {
-      this.$refs.upload.click()
+      if (!this.playing) {
+        this.$refs.upload.click()
+      }
     },
     onChangeUpload (event) {
       let files = event.target.files || event.dataTransfer.files

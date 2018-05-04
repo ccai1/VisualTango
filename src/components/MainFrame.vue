@@ -11,27 +11,30 @@ import OC from 'three-orbit-controls'
 
 export default {
   data () {
-    return {}
+    return {
+      scene: undefined,
+      camera: undefined,
+      control: undefined,
+      renderer: undefined,
+      mixer: undefined
+    }
   },
   mounted () {
-    const scene = new THREE.Scene()
-    const OrbitControls = OC(THREE)
+    this.scene = new THREE.Scene()
+    let OrbitControls = OC(THREE)
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 50)
-    camera.position.set(0, 10, 25)
-    camera.lookAt(scene.position) // look at 0, 0, 0
+    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 50)
+    this.camera.position.set(0, 10, 25)
+    this.camera.lookAt(this.scene.position) // look at 0, 0, 0
 
-    const renderer = new THREE.WebGLRenderer({ antialias : true })
-    renderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
-    this.$el.appendChild(renderer.domElement)
+    this.renderer = new THREE.WebGLRenderer({ antialias : true })
+    this.renderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
+    this.renderer.shadowMap.enabled = true
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.$el.appendChild(this.renderer.domElement)
 
-    const control = new OrbitControls(camera, renderer.domElement)
-    control.update()
-
-    let mixer, set
-    let clock = new THREE.Clock()
+    this.control = new OrbitControls(this.camera, this.renderer.domElement)
+    this.control.update()
 
     // add some light sources
     let light1 = new THREE.PointLight(0xffffff, 0.5, 100)
@@ -46,11 +49,11 @@ export default {
     light4.position.set(-20, 20, -20)
     // one at bottom
     light5.position.set(0, -20, 0)
-    scene.add(light1)
-    scene.add(light2)
-    scene.add(light3)
-    scene.add(light4)
-    scene.add(light5)
+    this.scene.add(light1)
+    this.scene.add(light2)
+    this.scene.add(light3)
+    this.scene.add(light4)
+    this.scene.add(light5)
 
     // add a plane as floor
     let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8)
@@ -61,10 +64,10 @@ export default {
     })
     let ground = new THREE.Mesh(groundGeometry, groundMaterial)
     ground.rotateX( - Math.PI / 2)
-    scene.add(ground)
+    this.scene.add(ground)
 
     // add stickman model
-    const loader = new THREE.JSONLoader()
+    let loader = new THREE.JSONLoader()
     loader.load('static/model/stickman.json', (geometry) => {
       let female = new THREE.SkinnedMesh(geometry, 
         new THREE.MeshStandardMaterial({ 
@@ -73,29 +76,33 @@ export default {
           metalness: 0.0
         })
       )
-      scene.add(female)
+      this.scene.add(female)
 
-      mixer = new THREE.AnimationMixer(female)
+      this.mixer = new THREE.AnimationMixer(female)
       let clips = geometry.animations
       let walkingClip = clips[0]
-      let walkCycle = mixer.clipAction(walkingClip)
+      let walkCycle = this.mixer.clipAction(walkingClip)
       walkCycle.play()
 
-      mixer.update(1)
-
-      // set = true
+      // use standing as the initial pose
+      console.log('initial poses: ' + this.playFrame)
+      this.mixer.update(this.playFrame || 0)
     })
 
-    let animate = function () {
-      if (set) {
-        mixer.update(2)
-      }
-      requestAnimationFrame(animate)
-      control.update()
-      renderer.render(scene, camera)
+    this.animate()
+  },
+  watch: {
+    playFrame: function (val) {
+      this.mixer.update(val || 0)
     }
-
-    animate()
+  },
+  props: ['playFrame'],
+  methods: {
+    animate () {
+      requestAnimationFrame(this.animate)
+      this.control.update()
+      this.renderer.render(this.scene, this.camera)
+    }
   }
 }
 </script>
