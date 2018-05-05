@@ -4,7 +4,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 // load THREE.js
 import * as THREE from 'three'
 import OC from 'three-orbit-controls'
@@ -28,7 +27,7 @@ export default {
     this.camera.position.set(0, 10, 25)
     this.camera.lookAt(this.scene.position) // look at 0, 0, 0
 
-    this.renderer = new THREE.WebGLRenderer({ antialias : true })
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setSize(this.$el.clientWidth, this.$el.clientHeight)
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
@@ -64,14 +63,14 @@ export default {
       metalness: 0.0
     })
     let ground = new THREE.Mesh(groundGeometry, groundMaterial)
-    ground.rotateX( - Math.PI / 2)
+    ground.rotateX(-Math.PI / 2)
     this.scene.add(ground)
 
     // add stickman model
     let loader = new THREE.JSONLoader()
     loader.load('static/model/stickman.json', (geometry) => {
-      let female = new THREE.SkinnedMesh(geometry, 
-        new THREE.MeshStandardMaterial({ 
+      let female = new THREE.SkinnedMesh(geometry,
+        new THREE.MeshStandardMaterial({
           color: 0xff0080,
           skinning: true,
           metalness: 0.0
@@ -96,8 +95,8 @@ export default {
   watch: {
     playFrame: function (val) {
       console.log('stiwch to frame: ', val)
-      this.mixer.update((val - this.prevFrame) || (- this.prevFrame))
-      this.prevFrame = (val - this.prevFrame) || (- this.prevFrame)
+      this.mixer.update((val - this.prevFrame) || (-this.prevFrame))
+      this.prevFrame = (val - this.prevFrame) || (-this.prevFrame)
     }
   },
   props: ['playFrame'],
