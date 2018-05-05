@@ -16,7 +16,8 @@ export default {
       camera: undefined,
       control: undefined,
       renderer: undefined,
-      mixer: undefined
+      mixer: undefined,
+      prevFrame: 0
     }
   },
   mounted () {
@@ -80,20 +81,23 @@ export default {
 
       this.mixer = new THREE.AnimationMixer(female)
       let clips = geometry.animations
-      let walkingClip = clips[0]
-      let walkCycle = this.mixer.clipAction(walkingClip)
-      walkCycle.play()
+      let clip = clips[0]
+      let cycle = this.mixer.clipAction(clip)
+      cycle.play()
 
       // use standing as the initial pose
-      console.log('initial poses: ' + this.playFrame)
+      console.log('initial frame: ', this.playFrame)
       this.mixer.update(this.playFrame || 0)
+      this.prevFrame = this.playFrame || 0
     })
 
     this.animate()
   },
   watch: {
     playFrame: function (val) {
-      this.mixer.update(val || 0)
+      console.log('stiwch to frame: ', val)
+      this.mixer.update((val - this.prevFrame) || (- this.prevFrame))
+      this.prevFrame = (val - this.prevFrame) || (- this.prevFrame)
     }
   },
   props: ['playFrame'],

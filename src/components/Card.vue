@@ -9,7 +9,7 @@
       <strong>weighted:</strong> {{ this.weighted }}<br />
       <strong>unweighted:</strong> {{ this.unweighted }}<br />
       <strong>learning:</strong> {{ this.learning }}<br />
-      <strong>delay:</strong> <input type="text" :value="this.timeDelay" @change="onChangeDelay" /> sec<br />
+      <strong>delay:</strong> <input type="text" :value="this.timeDelay" style="width: 40px" @change="onChangeDelay" /> sec<br />
 
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
@@ -66,7 +66,7 @@
       <br />
 
       <strong>delay:</strong>
-      <input type="text" v-model="delay" /> sec
+      <input type="text" v-model="delay" style="width: 40px" /> sec
       <br />
 
       <button
