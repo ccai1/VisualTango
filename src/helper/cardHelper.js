@@ -1,14 +1,17 @@
 import Mapping from './animationMapping'
 
 const validateCard = (card) => {
-  // name, direction, height, weighted, unweighted, learning, delay
-  if (!name || name === '') {
-    console.log('name is not defined')
+  // title, direction, height, weighted, unweighted, learning, delay
+  if (!card.title || card.title === '') {
+    console.log('title is not defined')
     return false
   }
   try {
     parseInt(Mapping[card.direction][card.height][card.weighted][card.unweighted][card.delay])
-    parseFloat(card.delay)
+    if (parseFloat(card.delay) < 0) {
+      console.log('delay need to be at least 0')
+      return false
+    }
   } catch (err) {
     console.log(err)
     return false
