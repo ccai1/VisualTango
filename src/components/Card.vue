@@ -8,7 +8,7 @@
       <strong>height:</strong> {{ this.height }}<br />
       <strong>weighted:</strong> {{ this.weighted }}<br />
       <strong>unweighted:</strong> {{ this.unweighted }}<br />
-      <strong>learning:</strong> {{ this.learning }}<br />
+      <strong>leaning:</strong> {{ this.leaning }}<br />
       <strong>delay:</strong> <input type="text" :value="this.timeDelay" style="width: 40px" @change="onChangeDelay" /> sec<br />
 
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
@@ -58,10 +58,10 @@
       </select>
       <br />
 
-      <strong>learning:</strong>
-      <input v-if="this.enableTyping" type="text" v-model="selected.learning" />
-      <select v-else v-model="selected.learning">
-        <option v-for="opts in selectOptions.learning" :key="opts" :value="opts">{{ opts }}</option>
+      <strong>leaning:</strong>
+      <input v-if="this.enableTyping" type="text" v-model="selected.leaning" />
+      <select v-else v-model="selected.leaning">
+        <option v-for="opts in selectOptions.leaning" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
 
@@ -78,7 +78,7 @@
           selected.height,
           selected.weighted,
           selected.unweighted,
-          selected.learning,
+          selected.leaning,
           delay
         )"
       >submit</button>
@@ -112,7 +112,7 @@ export default {
         height: 'high',
         weighted: 'left',
         unweighted: 'collected',
-        learning: 'neutral'
+        leaning: 'neutral'
       },
       selectOptions: {
         direction: [
@@ -138,7 +138,7 @@ export default {
           'slide-out-side',
           'wrapped-around-front'
         ],
-        learning: [
+        leaning: [
           'neutral',
           'forward',
           'backward',
@@ -161,7 +161,7 @@ export default {
     'weighted', // left or right
     'unweighted', // collected, crossed forward, forward, backward, in air forward
     // in air backward, slide out, wrapped around front leg
-    'learning', // neutral, forward, backward, towards weighted, towards unweighted
+    'leaning', // neutral, forward, backward, towards weighted, towards unweighted
 
     // submit and cancel buttons handlers for adding new card
     'onAddingNewSubmit',

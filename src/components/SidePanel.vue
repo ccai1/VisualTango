@@ -14,7 +14,7 @@
         :height="card.height"
         :weighted="card.weighted"
         :unweighted="card.unweighted"
-        :learning="card.learning"
+        :leaning="card.leaning"
         :timeDelay="card.delay"
         :removeCard="removeCard"
         :expendCard="expendCard"
