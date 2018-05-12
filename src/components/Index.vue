@@ -178,6 +178,12 @@ export default {
               console.log('play end')
               this.playing = false
               this.playFrame = 0
+              for (let i = 0; i < this.cards.length; i++) {
+                if (this.cards[i].expended) {
+                  this.playFrame = matchFrameIndex(this.cards[i])
+                  break
+                }
+              }
             } else {
               // go to the next card
               this.currentCard += 1
