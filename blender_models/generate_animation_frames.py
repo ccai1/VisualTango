@@ -61,23 +61,6 @@ for direction in ["north", "northwest", "northeast"]:
                     # apply unweighted foot with height feature
                     if height == "high" and weight == "left":
                         if unweighted == "collected":
-                            bpy.ops.poselib.apply_pose(pose_index=27)
-                        elif unweighted == "crossed-forward":
-                            bpy.ops.poselib.apply_pose(pose_index=29)
-                        elif unweighted == "forward":
-                            bpy.ops.poselib.apply_pose(pose_index=31)
-                        elif unweighted == "backward":
-                            bpy.ops.poselib.apply_pose(pose_index=33)
-                        elif unweighted == "in-air-forward":
-                            bpy.ops.poselib.apply_pose(pose_index=35)
-                        elif unweighted == "in-air-backward":
-                            bpy.ops.poselib.apply_pose(pose_index=37)
-                        elif unweighted == "slide-out-side":
-                            bpy.ops.poselib.apply_pose(pose_index=39)
-                        else:  # "wrapped-around-front"
-                            bpy.ops.poselib.apply_pose(pose_index=41)
-                    elif height == "high" and weight == "right":
-                        if unweighted == "collected":
                             bpy.ops.poselib.apply_pose(pose_index=26)
                         elif unweighted == "crossed-forward":
                             bpy.ops.poselib.apply_pose(pose_index=28)
@@ -93,24 +76,24 @@ for direction in ["north", "northwest", "northeast"]:
                             bpy.ops.poselib.apply_pose(pose_index=38)
                         else:  # "wrapped-around-front"
                             bpy.ops.poselib.apply_pose(pose_index=40)
-                    elif height == "low" and weight == "left":
+                    elif height == "high" and weight == "right":
                         if unweighted == "collected":
-                            bpy.ops.poselib.apply_pose(pose_index=8)
+                            bpy.ops.poselib.apply_pose(pose_index=27)
                         elif unweighted == "crossed-forward":
-                            bpy.ops.poselib.apply_pose(pose_index=10)
+                            bpy.ops.poselib.apply_pose(pose_index=29)
                         elif unweighted == "forward":
-                            bpy.ops.poselib.apply_pose(pose_index=12)
+                            bpy.ops.poselib.apply_pose(pose_index=31)
                         elif unweighted == "backward":
-                            bpy.ops.poselib.apply_pose(pose_index=15)
+                            bpy.ops.poselib.apply_pose(pose_index=33)
                         elif unweighted == "in-air-forward":
-                            bpy.ops.poselib.apply_pose(pose_index=17)
+                            bpy.ops.poselib.apply_pose(pose_index=35)
                         elif unweighted == "in-air-backward":
-                            bpy.ops.poselib.apply_pose(pose_index=19)
+                            bpy.ops.poselib.apply_pose(pose_index=37)
                         elif unweighted == "slide-out-side":
-                            bpy.ops.poselib.apply_pose(pose_index=21)
+                            bpy.ops.poselib.apply_pose(pose_index=39)
                         else:  # "wrapped-around-front"
-                            bpy.ops.poselib.apply_pose(pose_index=23)
-                    else:  # height == "low" and weight == "right"
+                            bpy.ops.poselib.apply_pose(pose_index=41)
+                    elif height == "low" and weight == "left":
                         if unweighted == "collected":
                             bpy.ops.poselib.apply_pose(pose_index=7)
                         elif unweighted == "crossed-forward":
@@ -127,6 +110,23 @@ for direction in ["north", "northwest", "northeast"]:
                             bpy.ops.poselib.apply_pose(pose_index=20)
                         else:  # "wrapped-around-front"
                             bpy.ops.poselib.apply_pose(pose_index=22)
+                    else:  # height == "low" and weight == "right"
+                        if unweighted == "collected":
+                            bpy.ops.poselib.apply_pose(pose_index=8)
+                        elif unweighted == "crossed-forward":
+                            bpy.ops.poselib.apply_pose(pose_index=10)
+                        elif unweighted == "forward":
+                            bpy.ops.poselib.apply_pose(pose_index=12)
+                        elif unweighted == "backward":
+                            bpy.ops.poselib.apply_pose(pose_index=15)
+                        elif unweighted == "in-air-forward":
+                            bpy.ops.poselib.apply_pose(pose_index=17)
+                        elif unweighted == "in-air-backward":
+                            bpy.ops.poselib.apply_pose(pose_index=19)
+                        elif unweighted == "slide-out-side":
+                            bpy.ops.poselib.apply_pose(pose_index=21)
+                        else:  # "wrapped-around-front"
+                            bpy.ops.poselib.apply_pose(pose_index=23)
 
                     # leaning
                     if height == "high":
