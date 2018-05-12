@@ -133,36 +133,48 @@ for direction in ["north", "northwest", "northeast"]:
                         if leaning == "neutral":
                             pass
                         elif leaning == "forward":
-                            bpy.ops.poselib.apply_pose(pose_index=42)
+                            if weight == "left":
+                                bpy.ops.poselib.apply_pose(pose_index=47)
+                            else:
+                                bpy.ops.poselib.apply_pose(pose_index=46)
                         elif leaning == "backward":
-                            bpy.ops.poselib.apply_pose(pose_index=44)
+                            if weight == "left":
+                                bpy.ops.poselib.apply_pose(pose_index=49)
+                            else:
+                                bpy.ops.poselib.apply_pose(pose_index=48)
                         elif leaning == "toward-weighted":
                             if weight == "left":
-                                bpy.ops.poselib.apply_pose(pose_index=46)
+                                bpy.ops.poselib.apply_pose(pose_index=57)
                             else:  # right
-                                bpy.ops.poselib.apply_pose(pose_index=48)
+                                bpy.ops.poselib.apply_pose(pose_index=55)
                         else:  # "toward-unweighted"
                             if weight == "left":
-                                bpy.ops.poselib.apply_pose(pose_index=48)
+                                bpy.ops.poselib.apply_pose(pose_index=56)
                             else:  # right
-                                bpy.ops.poselib.apply_pose(pose_index=46)
+                                bpy.ops.poselib.apply_pose(pose_index=54)
                     else:  # low
                         if leaning == "neutral":
                             pass
                         elif leaning == "forward":
-                            bpy.ops.poselib.apply_pose(pose_index=43)
+                            if weight == "left":
+                                bpy.ops.poselib.apply_pose(pose_index=43)
+                            else:  # right
+                                bpy.ops.poselib.apply_pose(pose_index=42)
                         elif leaning == "backward":
-                            bpy.ops.poselib.apply_pose(pose_index=45)
+                            if weight == "left":
+                                bpy.ops.poselib.apply_pose(pose_index=45)
+                            else:  # right
+                                bpy.ops.poselib.apply_pose(pose_index=44)
                         elif leaning == "toward-weighted":
                             if weight == "left":
-                                bpy.ops.poselib.apply_pose(pose_index=47)
+                                bpy.ops.poselib.apply_pose(pose_index=53)
                             else:  # right
-                                bpy.ops.poselib.apply_pose(pose_index=49)
+                                bpy.ops.poselib.apply_pose(pose_index=51)
                         else:  # "toward-unweighted"
                             if weight == "left":
-                                bpy.ops.poselib.apply_pose(pose_index=49)
+                                bpy.ops.poselib.apply_pose(pose_index=52)
                             else:  # right
-                                bpy.ops.poselib.apply_pose(pose_index=47)
+                                bpy.ops.poselib.apply_pose(pose_index=50)
 
                     # insert into a new frame
                     bpy.ops.anim.keyframe_insert_menu(type='WholeCharacter')
