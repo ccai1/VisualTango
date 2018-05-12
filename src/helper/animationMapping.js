@@ -1,4 +1,4 @@
-// direction, height, weighted, unweighted, learning
+// direction, height, weighted, unweighted, leaning
 export default {
   // unique initial pose
   'standing': 0,
@@ -10,7 +10,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 1,
           'forward': 2,
           'backward': 3,
@@ -18,7 +18,7 @@ export default {
           'toward-unweighted': 5
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 6,
           'forward': 7,
           'backward': 8,
@@ -26,7 +26,7 @@ export default {
           'toward-unweighted': 10
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 11,
           'forward': 12,
           'backward': 13,
@@ -34,7 +34,7 @@ export default {
           'toward-unweighted': 15
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 16,
           'forward': 17,
           'backward': 18,
@@ -42,7 +42,7 @@ export default {
           'toward-unweighted': 20
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 21,
           'forward': 22,
           'backward': 23,
@@ -50,7 +50,7 @@ export default {
           'toward-unweighted': 25
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 26,
           'forward': 27,
           'backward': 28,
@@ -58,7 +58,7 @@ export default {
           'toward-unweighted': 30
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 31,
           'forward': 32,
           'backward': 33,
@@ -66,7 +66,7 @@ export default {
           'toward-unweighted': 35
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 36,
           'forward': 37,
           'backward': 38,
@@ -77,7 +77,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 41,
           'forward': 42,
           'backward': 43,
@@ -85,7 +85,7 @@ export default {
           'toward-unweighted': 45
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 46,
           'forward': 47,
           'backward': 48,
@@ -93,7 +93,7 @@ export default {
           'toward-unweighted': 50
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 51,
           'forward': 52,
           'backward': 53,
@@ -101,7 +101,7 @@ export default {
           'toward-unweighted': 55
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 56,
           'forward': 57,
           'backward': 58,
@@ -109,7 +109,7 @@ export default {
           'toward-unweighted': 60
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 61,
           'forward': 62,
           'backward': 63,
@@ -117,7 +117,7 @@ export default {
           'toward-unweighted': 65
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 66,
           'forward': 67,
           'backward': 68,
@@ -125,7 +125,7 @@ export default {
           'toward-unweighted': 70
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 71,
           'forward': 72,
           'backward': 73,
@@ -133,7 +133,7 @@ export default {
           'toward-unweighted': 75
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 76,
           'forward': 77,
           'backward': 78,
@@ -147,7 +147,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 81,
           'forward': 82,
           'backward': 83,
@@ -155,7 +155,7 @@ export default {
           'toward-unweighted': 85
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 86,
           'forward': 87,
           'backward': 88,
@@ -163,7 +163,7 @@ export default {
           'toward-unweighted': 90
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 91,
           'forward': 92,
           'backward': 93,
@@ -171,7 +171,7 @@ export default {
           'toward-unweighted': 95
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 96,
           'forward': 97,
           'backward': 98,
@@ -179,7 +179,7 @@ export default {
           'toward-unweighted': 100
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 101,
           'forward': 102,
           'backward': 103,
@@ -187,7 +187,7 @@ export default {
           'toward-unweighted': 105
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 106,
           'forward': 107,
           'backward': 108,
@@ -195,7 +195,7 @@ export default {
           'toward-unweighted': 110
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 111,
           'forward': 112,
           'backward': 113,
@@ -203,7 +203,7 @@ export default {
           'toward-unweighted': 115
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 116,
           'forward': 117,
           'backward': 118,
@@ -214,7 +214,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 121,
           'forward': 122,
           'backward': 123,
@@ -222,7 +222,7 @@ export default {
           'toward-unweighted': 125
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 126,
           'forward': 127,
           'backward': 128,
@@ -230,7 +230,7 @@ export default {
           'toward-unweighted': 130
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 131,
           'forward': 132,
           'backward': 133,
@@ -238,7 +238,7 @@ export default {
           'toward-unweighted': 135
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 136,
           'forward': 137,
           'backward': 138,
@@ -246,7 +246,7 @@ export default {
           'toward-unweighted': 140
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 141,
           'forward': 142,
           'backward': 143,
@@ -254,7 +254,7 @@ export default {
           'toward-unweighted': 145
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 146,
           'forward': 147,
           'backward': 148,
@@ -262,7 +262,7 @@ export default {
           'toward-unweighted': 150
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 151,
           'forward': 152,
           'backward': 153,
@@ -270,7 +270,7 @@ export default {
           'toward-unweighted': 155
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 156,
           'forward': 157,
           'backward': 158,
@@ -287,7 +287,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 161,
           'forward': 162,
           'backward': 163,
@@ -295,7 +295,7 @@ export default {
           'toward-unweighted': 165
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 166,
           'forward': 167,
           'backward': 168,
@@ -303,7 +303,7 @@ export default {
           'toward-unweighted': 170
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 171,
           'forward': 172,
           'backward': 173,
@@ -311,7 +311,7 @@ export default {
           'toward-unweighted': 175
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 176,
           'forward': 177,
           'backward': 178,
@@ -319,7 +319,7 @@ export default {
           'toward-unweighted': 180
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 181,
           'forward': 182,
           'backward': 183,
@@ -327,7 +327,7 @@ export default {
           'toward-unweighted': 185
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 186,
           'forward': 187,
           'backward': 188,
@@ -335,7 +335,7 @@ export default {
           'toward-unweighted': 190
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 191,
           'forward': 192,
           'backward': 193,
@@ -343,7 +343,7 @@ export default {
           'toward-unweighted': 195
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 196,
           'forward': 197,
           'backward': 198,
@@ -354,7 +354,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 201,
           'forward': 202,
           'backward': 203,
@@ -362,7 +362,7 @@ export default {
           'toward-unweighted': 205
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 206,
           'forward': 207,
           'backward': 208,
@@ -370,7 +370,7 @@ export default {
           'toward-unweighted': 210
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 211,
           'forward': 212,
           'backward': 213,
@@ -378,7 +378,7 @@ export default {
           'toward-unweighted': 215
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 216,
           'forward': 217,
           'backward': 218,
@@ -386,7 +386,7 @@ export default {
           'toward-unweighted': 220
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 221,
           'forward': 222,
           'backward': 223,
@@ -394,7 +394,7 @@ export default {
           'toward-unweighted': 225
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 226,
           'forward': 227,
           'backward': 228,
@@ -402,7 +402,7 @@ export default {
           'toward-unweighted': 230
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 231,
           'forward': 232,
           'backward': 233,
@@ -410,7 +410,7 @@ export default {
           'toward-unweighted': 235
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 236,
           'forward': 237,
           'backward': 238,
@@ -424,7 +424,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 241,
           'forward': 242,
           'backward': 243,
@@ -432,7 +432,7 @@ export default {
           'toward-unweighted': 245
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 246,
           'forward': 247,
           'backward': 248,
@@ -440,7 +440,7 @@ export default {
           'toward-unweighted': 250
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 251,
           'forward': 252,
           'backward': 253,
@@ -448,7 +448,7 @@ export default {
           'toward-unweighted': 255
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 256,
           'forward': 257,
           'backward': 258,
@@ -456,7 +456,7 @@ export default {
           'toward-unweighted': 260
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 261,
           'forward': 262,
           'backward': 263,
@@ -464,7 +464,7 @@ export default {
           'toward-unweighted': 265
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 266,
           'forward': 267,
           'backward': 268,
@@ -472,7 +472,7 @@ export default {
           'toward-unweighted': 270
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 271,
           'forward': 272,
           'backward': 273,
@@ -480,7 +480,7 @@ export default {
           'toward-unweighted': 275
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 276,
           'forward': 277,
           'backward': 278,
@@ -491,7 +491,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 281,
           'forward': 282,
           'backward': 283,
@@ -499,7 +499,7 @@ export default {
           'toward-unweighted': 285
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 286,
           'forward': 287,
           'backward': 288,
@@ -507,7 +507,7 @@ export default {
           'toward-unweighted': 290
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 291,
           'forward': 292,
           'backward': 293,
@@ -515,7 +515,7 @@ export default {
           'toward-unweighted': 295
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 296,
           'forward': 297,
           'backward': 298,
@@ -523,7 +523,7 @@ export default {
           'toward-unweighted': 300
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 301,
           'forward': 302,
           'backward': 303,
@@ -531,7 +531,7 @@ export default {
           'toward-unweighted': 305
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 306,
           'forward': 307,
           'backward': 308,
@@ -539,7 +539,7 @@ export default {
           'toward-unweighted': 310
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 311,
           'forward': 312,
           'backward': 313,
@@ -547,7 +547,7 @@ export default {
           'toward-unweighted': 315
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 316,
           'forward': 317,
           'backward': 318,
@@ -564,7 +564,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 321,
           'forward': 322,
           'backward': 323,
@@ -572,7 +572,7 @@ export default {
           'toward-unweighted': 325
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 326,
           'forward': 327,
           'backward': 328,
@@ -580,7 +580,7 @@ export default {
           'toward-unweighted': 330
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 331,
           'forward': 332,
           'backward': 333,
@@ -588,7 +588,7 @@ export default {
           'toward-unweighted': 335
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 336,
           'forward': 337,
           'backward': 338,
@@ -596,7 +596,7 @@ export default {
           'toward-unweighted': 340
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 341,
           'forward': 342,
           'backward': 343,
@@ -604,7 +604,7 @@ export default {
           'toward-unweighted': 345
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 346,
           'forward': 347,
           'backward': 348,
@@ -612,7 +612,7 @@ export default {
           'toward-unweighted': 350
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 351,
           'forward': 352,
           'backward': 353,
@@ -620,7 +620,7 @@ export default {
           'toward-unweighted': 355
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 356,
           'forward': 357,
           'backward': 358,
@@ -631,7 +631,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 361,
           'forward': 362,
           'backward': 363,
@@ -639,7 +639,7 @@ export default {
           'toward-unweighted': 365
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 366,
           'forward': 367,
           'backward': 368,
@@ -647,7 +647,7 @@ export default {
           'toward-unweighted': 370
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 371,
           'forward': 372,
           'backward': 373,
@@ -655,7 +655,7 @@ export default {
           'toward-unweighted': 375
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 376,
           'forward': 377,
           'backward': 378,
@@ -663,7 +663,7 @@ export default {
           'toward-unweighted': 380
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 381,
           'forward': 382,
           'backward': 383,
@@ -671,7 +671,7 @@ export default {
           'toward-unweighted': 385
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 386,
           'forward': 387,
           'backward': 388,
@@ -679,7 +679,7 @@ export default {
           'toward-unweighted': 390
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 391,
           'forward': 392,
           'backward': 393,
@@ -687,7 +687,7 @@ export default {
           'toward-unweighted': 395
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 396,
           'forward': 397,
           'backward': 398,
@@ -701,7 +701,7 @@ export default {
       'left': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 401,
           'forward': 402,
           'backward': 403,
@@ -709,7 +709,7 @@ export default {
           'toward-unweighted': 405
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 406,
           'forward': 407,
           'backward': 408,
@@ -717,7 +717,7 @@ export default {
           'toward-unweighted': 410
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 411,
           'forward': 412,
           'backward': 413,
@@ -725,7 +725,7 @@ export default {
           'toward-unweighted': 415
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 416,
           'forward': 417,
           'backward': 418,
@@ -733,7 +733,7 @@ export default {
           'toward-unweighted': 420
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 421,
           'forward': 422,
           'backward': 423,
@@ -741,7 +741,7 @@ export default {
           'toward-unweighted': 425
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 426,
           'forward': 427,
           'backward': 428,
@@ -749,7 +749,7 @@ export default {
           'toward-unweighted': 430
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 431,
           'forward': 432,
           'backward': 433,
@@ -757,7 +757,7 @@ export default {
           'toward-unweighted': 435
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 436,
           'forward': 437,
           'backward': 438,
@@ -768,7 +768,7 @@ export default {
       'right': {
         // unweighted
         'collected': {
-          // learning
+          // leaning
           'neutral': 441,
           'forward': 442,
           'backward': 443,
@@ -776,7 +776,7 @@ export default {
           'toward-unweighted': 445
         },
         'crossed-forward': {
-          // learning
+          // leaning
           'neutral': 446,
           'forward': 447,
           'backward': 448,
@@ -784,7 +784,7 @@ export default {
           'toward-unweighted': 450
         },
         'forward': {
-          // learning
+          // leaning
           'neutral': 451,
           'forward': 452,
           'backward': 453,
@@ -792,7 +792,7 @@ export default {
           'toward-unweighted': 455
         },
         'backward': {
-          // learning
+          // leaning
           'neutral': 456,
           'forward': 457,
           'backward': 458,
@@ -800,7 +800,7 @@ export default {
           'toward-unweighted': 460
         },
         'in-air-forward': {
-          // learning
+          // leaning
           'neutral': 461,
           'forward': 462,
           'backward': 463,
@@ -808,7 +808,7 @@ export default {
           'toward-unweighted': 465
         },
         'in-air-backward': {
-          // learning
+          // leaning
           'neutral': 466,
           'forward': 467,
           'backward': 468,
@@ -816,7 +816,7 @@ export default {
           'toward-unweighted': 470
         },
         'slide-out-side': {
-          // learning
+          // leaning
           'neutral': 471,
           'forward': 472,
           'backward': 473,
@@ -824,7 +824,7 @@ export default {
           'toward-unweighted': 475
         },
         'wrapped-around-front': {
-          // learning
+          // leaning
           'neutral': 476,
           'forward': 477,
           'backward': 478,
