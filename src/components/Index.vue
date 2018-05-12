@@ -148,6 +148,7 @@ export default {
           this.cards[i].expended = false
         }
         this.cards[index].expended = true
+        this.playFrame = matchFrameIndex(this.cards[index])
       }
     },
     updateDelay (index, value) {

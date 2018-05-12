@@ -94,9 +94,9 @@ export default {
   },
   watch: {
     playFrame: function (val) {
-      console.log('stiwch to frame: ', val)
+      console.log('switch to frame: ', val)
       this.mixer.update((val - this.prevFrame) || (-this.prevFrame))
-      this.prevFrame = (val - this.prevFrame) || (-this.prevFrame)
+      this.prevFrame = val
     }
   },
   props: ['playFrame'],

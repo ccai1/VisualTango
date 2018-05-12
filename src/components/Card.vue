@@ -100,13 +100,6 @@
 
 <script>
 export default {
-  beforeUpdate () {
-    this.selected.direction = this.enableTyping ? '' : 'north'
-    this.selected.height = this.enableTyping ? '' : 'high'
-    this.selected.weighted = this.enableTyping ? '' : 'left'
-    this.selected.unweighted = this.enableTyping ? '' : 'collected'
-    this.selected.learning = this.enableTyping ? '' : 'neutral'
-  },
   data () {
     return {
       // title of this card
