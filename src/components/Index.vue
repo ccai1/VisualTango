@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     // add a new card element to the list
-    addCard (name, direction, height, weighted, unweighted, learning, delay) {
+    addCard (name, direction, height, weighted, unweighted, leaning, delay) {
       let card = {
         type: 'card',
         title: name.trim(),
@@ -103,7 +103,7 @@ export default {
         height: height.trim().replace(/\s+/g, '-'),
         weighted: weighted.trim().replace(/\s+/g, '-'),
         unweighted: unweighted.trim().replace(/\s+/g, '-'),
-        learning: learning.trim().replace(/\s+/g, '-'),
+        leaning: leaning.trim().replace(/\s+/g, '-'),
         delay: delay
       }
       // validate
