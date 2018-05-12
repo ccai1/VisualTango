@@ -83,6 +83,6 @@ export default {
   background-color: #F5F5DC;
   border-radius: 3px;
   box-shadow: 0px 0px 10px 1px;
-  overflow-y: scroll;
+  overflow: auto;
 }
 </style>
