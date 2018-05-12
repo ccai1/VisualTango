@@ -117,6 +117,7 @@ export default {
     removeCard (index) {
       if (index >= 0 && index <= this.cards.length - 1) {
         this.cards.splice(index, 1)
+        this.playFrame = 0
       }
     },
     // change the index of a card
@@ -202,6 +203,7 @@ export default {
     },
     handleClearButton () {
       this.cards = []
+      this.playFrame = 0
     },
     handleTypingButton () {
       this.enableTyping = !this.enableTyping
