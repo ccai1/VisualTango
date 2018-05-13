@@ -5,37 +5,37 @@
     :style="{
       backgroundColor: '#32CD32'
     }"
-  ><span class="button-text">P</span></div>
+  ><span class="button-text">Play</span></div>
   <div v-else-if="this.type === 'typing' && this.enableTyping && this.enableTyping === true"
     class="round-button"
     :style="{
       backgroundColor: '#7FFFD4'
     }"
-  ><span class="button-text">T</span></div>
+  ><span class="button-text">Toggle</span></div>
   <div v-else-if="this.type === 'typing'"
     class="round-button"
     :style="{
       backgroundColor: '#A9A9A9'
     }"
-  ><span class="button-text">T</span></div>
+  ><span class="button-text">Toggle</span></div>
   <div v-else-if="this.type === 'clear'"
     class="round-button"
     :style="{
       backgroundColor: '#DC143C'
     }"
-  ><span class="button-text">C</span></div>
+  ><span class="button-text">Clear</span></div>
   <div v-else-if="this.type === 'download'"
     class="round-button"
     :style="{
       backgroundColor: '#00008B'
     }"
-  ><span class="button-text">D</span></div>
+  ><span class="button-text">Save</span></div>
   <div v-else
     class="round-button"
     :style="{
       backgroundColor: '#B8860B'
     }"
-  ><span class="button-text">U</span></div>
+  ><span class="button-text">Resume</span></div>
 </a>
 </template>
 
@@ -57,19 +57,18 @@ export default {
 <style scoped>
 .round-button {
   position: relative;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   box-shadow: 0px 0px 5px 1px gray;
   border-radius: 50%;
   margin: 8px;
   cursor: pointer;
 }
 .button-text {
-  position: relative;
-  top: 8.8px;
-  left: 0.6px;
   font-weight: bold;
-  font-size: 23px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 60px;
   color: white;
 }
 </style>

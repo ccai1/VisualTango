@@ -54,7 +54,7 @@ This web app contains three parts. A left-side panel used to define a sequence o
 
   ![add new button](images/add-new-button.png)
 
-  Then the button will turn into an input panel allows you to input the details of this new card. Dropdown lists are the default way of doing this. Yet, you can choose to type in by enable the typing mode (click on the `T` floating button).
+  Then the button will turn into an input panel allows you to input the details of this new card. Dropdown lists are the default way of doing this. Yet, you can choose to type in by enable the typing mode (click on the `Toggle` floating button).
 
   `delay` means the seconds the screen will stay at this frame when you are playing this sequence of cards.
 
@@ -84,11 +84,11 @@ This web app contains three parts. A left-side panel used to define a sequence o
 ## Floating buttons
 
   The floating buttons are some extra functions provided for ease of use.
-  - `P` click to play the sequence of cards. You won't be able to add new card while playing. After playing the figure will go back to the card that was previously expended.
-  - `T` the button to toggle the typing mode.
-  - `C` clear all the cards in the list by only one click.
-  - `D` download the sequence of cards in a JSON file.
-  - `U` upload your JSON file to resume your sequence.
+  - `Play` click to play the sequence of cards. You won't be able to add new card while playing. After playing the figure will go back to the card that was previously expended.
+  - `Toggle` the button to toggle the typing mode.
+  - `Clear` clear all the cards in the list by only one click.
+  - `Save` download the sequence of cards in a JSON file.
+  - `Resume` upload your JSON file to resume your sequence.
 
   ![buttons](images/buttons.png)
 
