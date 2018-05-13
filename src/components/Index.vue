@@ -47,6 +47,7 @@ import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import { download } from '../helper/fileHelper'
 import { validateCard, matchFrameIndex } from '../helper/cardHelper'
 import axios from 'axios'
+import preloadData from '../../static/preload.json'
 
 export default {
   data () {
@@ -74,6 +75,10 @@ export default {
       }
     } catch (err) {
       console.log(err)
+    }
+
+    if (this.cards.length === 0) {
+      this.cards = preloadData
     }
   },
   beforeUpdate () {
