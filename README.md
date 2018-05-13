@@ -136,6 +136,6 @@ Below is a series of Blender tutorial videos that introduced me to the basic ski
 
 ## Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xO7WGC0fHp0?ecver=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![demo video](https://img.youtube.com/vi/xO7WGC0fHp0/0.jpg)](https://www.youtube.com/watch?v=xO7WGC0fHp0)
 
 >[Go Top](#table-of-contents)
