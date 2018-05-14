@@ -86,14 +86,14 @@ This web app contains three parts. A left-side panel used to define a sequence o
 
   The floating buttons are some extra functions provided for ease of use.
   - `Play` click to play the sequence of cards. You won't be able to add new card while playing. After playing the figure will go back to the card that was previously expended.
-  - `Toggle` the button to toggle the typing mode.
+  - `Toggle` the button to toggle the typing mode. Once this button is active, it will be light blue. And all the dropdowns in the add-new-card panel will turn into input boxes.
   - `Clear` clear all the cards in the list by only one click.
   - `Save` download the sequence of cards in a JSON file.
   - `Resume` upload your JSON file to resume your sequence.
 
   ![buttons](images/buttons.png)
 
-  If you have your browser cookie enabled, the web app will frequently store your changes to the sequence to your cookie, so you won't lose anything by click on refresh by accident. For long term purpose, the `D` and `U` buttons should serve it.
+  If you have your browser cookie enabled, the web app will frequently store your changes to the sequence to your cookie, so you won't lose anything by click on refresh by accident. For long term purpose, the `Save` and `Resume` buttons should serve it.
 
 >[Go Top](#table-of-contents)
 
