@@ -162,7 +162,6 @@ export default {
         this.playFrame = matchFrameIndex(this.cards[index])
       }
     },
-
     // card update functions
     updateDelay (index, value) {
       if (!this.playing) {
@@ -223,8 +222,7 @@ export default {
           this.cards[index].leaning = oldValue
         }
       }
-    }
-
+    },
     // button handlers
     handlePlayButton () {
       // set playing flag and counter
