@@ -19,12 +19,7 @@
         :removeCard="removeCard"
         :expendCard="expendCard"
         :enableTyping="enableTyping"
-        :updateDelay="updateDelay"
-        :updateDirection="updateDirection"
-        :updateHeight="updateHeight"
-        :updateWeighted="updateWeighted"
-        :updateUnweighted="updateUnweighted"
-        :updateLeaning="updateLeaning"
+        :submitChanges="submitChanges"
       >
       </Card>
     </Dragglable>
@@ -68,12 +63,7 @@ export default {
     'enableTyping',
 
     // update
-    'updateDelay',
-    'updateDirection',
-    'updateHeight',
-    'updateWeighted',
-    'updateUnweighted',
-    'updateLeaning'
+    'submitChanges'
   ],
   components: {
     'Card': Card,

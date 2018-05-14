@@ -34,12 +34,7 @@
       :onClickAddNew="onClickAddNew"
       :expendCard="expendCard"
       :enableTyping="this.enableTyping"
-      :updateDelay="updateDelay"
-      :updateDirection="updateDirection"
-      :updateHeight="updateHeight"
-      :updateWeighted="updateWeighted"
-      :updateUnweighted="updateUnweighted"
-      :updateLeaning="updateLeaning"
+      :submitChanges="submitChanges"
     ></SidePanel>
   </div>
 </template>
@@ -163,65 +158,21 @@ export default {
       }
     },
     // card update functions
-    updateDelay (index, value) {
+    submitChanges (index, changes) {
       if (!this.playing) {
-        let oldValue = this.cards[index].delay
-        this.cards[index].delay = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].delay = oldValue
+        let c = this.cards[index]
+        c.direction = changes.direction
+        c.height = changes.height
+        c.weighted = changes.weighted
+        c.unweighted = changes.unweighted
+        c.leaning = changes.leaning
+        c.delay = changes.delay
+        if (validateCard(c)) {
+          this.cards[index] = c
+          return true
         }
       }
-    },
-    updateDirection (index, value) {
-      if (!this.playing) {
-        let oldValue = this.cards[index].direction
-        this.cards[index].direction = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].direction = oldValue
-        }
-      }
-    },
-    updateHeight (index, value) {
-      if (!this.playing) {
-        let oldValue = this.cards[index].height
-        this.cards[index].height = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].height = oldValue
-        }
-      }
-    },
-    updateWeighted (index, value) {
-      if (!this.playing) {
-        let oldValue = this.cards[index].weighted
-        this.cards[index].weighted = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].weighted = oldValue
-        }
-      }
-    },
-    updateUnweighted (index, value) {
-      if (!this.playing) {
-        let oldValue = this.cards[index].unweighted
-        this.cards[index].unweighted = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].unweighted = oldValue
-        }
-      }
-    },
-    updateLeaning (index, value) {
-      if (!this.playing) {
-        let oldValue = this.cards[index].leaning
-        this.cards[index].leaning = value
-        if (!validateCard(this.cards[index])) {
-          // change it back
-          this.cards[index].leaning = oldValue
-        }
-      }
+      return false
     },
     // button handlers
     handlePlayButton () {

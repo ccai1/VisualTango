@@ -5,37 +5,39 @@
     <strong>{{ this.title }}</strong><br />
     <div style="text-align: left; padding-left: 5px">
       <strong>direction:</strong>
-      <input v-if="this.enableTyping" type="text" :value="this.direction" @change="onChangeDirection" />
-      <select v-else :value="this.direction" @change="onChangeDirection">
+      <input v-if="this.enableTyping" type="text" v-model="selected.direction" @change="onChangeData" />
+      <select v-else v-model="selected.direction" @change="onChangeData">
         <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
       <strong>height:</strong>
-      <input v-if="this.enableTyping" type="text" :value="this.height" @change="onChangeHeight" />
-      <select v-else :value="this.height" @change="onChangeHeight">
+      <input v-if="this.enableTyping" type="text" v-model="selected.height" @change="onChangeData" />
+      <select v-else v-model="selected.height" @change="onChangeData">
         <option v-for="opts in selectOptions.height" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
       <strong>weighted:</strong>
-      <input v-if="this.enableTyping" type="text" :value="this.weighted" @change="onChangeWeighted" />
-      <select v-else :value="this.weighted" @change="onChangeWeighted">
+      <input v-if="this.enableTyping" type="text" v-model="selected.weighted" @change="onChangeData" />
+      <select v-else v-model="selected.weighted" @change="onChangeData">
         <option v-for="opts in selectOptions.weighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
       <strong>unweighted:</strong>
-      <input v-if="this.enableTyping" type="text" :value="this.unweighted" @change="onChangeUnweighted" />
-      <select v-else :value="this.unweighted" @change="onChangeUnweighted">
+      <input v-if="this.enableTyping" type="text" v-model="selected.unweighted" @change="onChangeData" />
+      <select v-else v-model="selected.unweighted" @change="onChangeData">
         <option v-for="opts in selectOptions.unweighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
       <strong>leaning:</strong>
-      <input v-if="this.enableTyping" type="text" :value="this.leaning" @change="onChangeLeaning" />
-      <select v-else :value="this.leaning" @change="onChangeLeaning">
+      <input v-if="this.enableTyping" type="text" v-model="selected.leaning" @change="onChangeData" />
+      <select v-else :value="this.leaning" @change="onChangeData">
         <option v-for="opts in selectOptions.leaning" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
-      <strong>delay:</strong> <input type="text" :value="this.timeDelay" style="width: 40px" @change="onChangeDelay" /> sec<br />
+      <strong>delay:</strong> <input type="text" v-model="delay" style="width: 40px" @change="onChangeData" /> sec<br />
 
+      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #FFD700" @click="onClickSubmitChanges">submit</button>
+      <button v-else class="card-button" style="border: 0px; background-color: #A9A9A9" disabled>submit</button>
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
     </div>
@@ -126,11 +128,13 @@
 <script>
 export default {
   data () {
-    return {
+    let d = {
       // title of this card
       name: '',
       // time delay for a new card
       delay: '',
+      // a flag whether there are changes to the card
+      hasChanges: false,
       // dropdowns for adding a new card
       selected: {
         direction: 'north',
@@ -172,6 +176,27 @@ export default {
         ]
       }
     }
+
+    if (this.timeDelay) {
+      d.delay = this.timeDelay
+    }
+    if (this.direction) {
+      d.selected.direction = this.direction
+    }
+    if (this.height) {
+      d.selected.height = this.height
+    }
+    if (this.weighted) {
+      d.selected.weighted = this.weighted
+    }
+    if (this.unweighted) {
+      d.selected.unweighted = this.unweighted
+    }
+    if (this.leaning) {
+      d.selected.leaning = this.leaning
+    }
+
+    return d
   },
   props: [
     'index',
@@ -205,31 +230,24 @@ export default {
     'timeDelay',
 
     // callback to update card
-    'updateDelay',
-    'updateDirection',
-    'updateHeight',
-    'updateWeighted',
-    'updateUnweighted',
-    'updateLeaning'
+    'submitChanges'
   ],
   methods: {
-    onChangeDelay (event) {
-      this.updateDelay(this.index, event.target.value)
+    onChangeData (event) {
+      this.hasChanges = true
     },
-    onChangeDirection (event) {
-      this.updateDirection(this.index, event.target.value)
-    },
-    onChangeHeight (event) {
-      this.updateHeight(this.index, event.target.value)
-    },
-    onChangeWeighted (event) {
-      this.updateWeighted(this.index, event.target.value)
-    },
-    onChangeUnweighted (event) {
-      this.updateUnweighted(this.index, event.target.value)
-    },
-    onChangeLeaning (event) {
-      this.updateLeaning(this.index, event.target.value)
+    onClickSubmitChanges (event) {
+      let changes = {
+        direction: this.selected.direction,
+        height: this.selected.height,
+        weighted: this.selected.weighted,
+        unweighted: this.selected.unweighted,
+        leaning: this.selected.leaning,
+        delay: this.delay
+      }
+      if (this.submitChanges(this.index, changes)) {
+        this.hasChanges = false
+      }
     }
   }
 }
