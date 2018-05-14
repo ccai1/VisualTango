@@ -37,7 +37,7 @@
       <strong>delay:</strong> <input type="text" v-model="delay" style="width: 40px" @change="onChangeData" /> sec<br />
 
       <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #FFD700" @click="onClickSubmitChanges">submit</button>
-      <button v-else class="card-button" style="border: 0px; background-color: #A9A9A9" disabled>submit</button>
+      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #F8F8FF" @click="onClickCancelChanges">cancel</button>
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
       <br /><br />
     </div>
@@ -248,6 +248,27 @@ export default {
       if (this.submitChanges(this.index, changes)) {
         this.hasChanges = false
       }
+    },
+    onClickCancelChanges (event) {
+      if (this.timeDelay) {
+        this.delay = this.timeDelay
+      }
+      if (this.direction) {
+        this.selected.direction = this.direction
+      }
+      if (this.height) {
+        this.selected.height = this.height
+      }
+      if (this.weighted) {
+        this.selected.weighted = this.weighted
+      }
+      if (this.unweighted) {
+        this.selected.unweighted = this.unweighted
+      }
+      if (this.leaning) {
+        this.selected.leaning = this.leaning
+      }
+      this.hasChanges = false
     }
   }
 }
