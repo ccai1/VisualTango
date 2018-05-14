@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <input ref="upload" type="file" style="display: none" @change="onChangeUpload" />
+    <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
     <div class="floating-button-set">
       <RoundButton
         type="play"
@@ -248,6 +248,9 @@ export default {
       } else {
         console.log('length of files is not 1')
       }
+      // clear the value here otherwise it won't work
+      // the next time we upload the same file.
+      document.getElementById('file-upload').value = ''
     }
   }
 }
