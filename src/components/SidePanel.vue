@@ -19,6 +19,11 @@
         :removeCard="removeCard"
         :expendCard="expendCard"
         :updateDelay="updateDelay"
+        :updateDirection="updateDirection"
+        :updateHeight="updateHeight"
+        :updateWeighted="updateWeighted"
+        :updateUnweighted="updateUnweighted"
+        :updateLeaning="updateLeaning"
       >
       </Card>
     </Dragglable>
@@ -61,8 +66,13 @@ export default {
     // if it is enabled, then all the dropdowns need to be typing
     'enableTyping',
 
-    // update delay
-    'updateDelay'
+    // update
+    'updateDelay',
+    'updateDirection',
+    'updateHeight',
+    'updateWeighted',
+    'updateUnweighted',
+    'updateLeaning'
   ],
   components: {
     'Card': Card,

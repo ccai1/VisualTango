@@ -4,11 +4,36 @@
   >
     <strong>{{ this.title }}</strong><br />
     <div style="text-align: left; padding-left: 5px">
-      <strong>direction:</strong> {{ this.direction }}<br />
-      <strong>height:</strong> {{ this.height }}<br />
-      <strong>weighted:</strong> {{ this.weighted }}<br />
-      <strong>unweighted:</strong> {{ this.unweighted }}<br />
-      <strong>leaning:</strong> {{ this.leaning }}<br />
+      <strong>direction:</strong> 
+      <input v-if="this.enableTyping" type="text" :value="this.direction" @change="onChangeDirection" />
+      <select v-else :value="this.direction" @change="onChangeDirection">
+        <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
+      </select>
+      <br />
+      <strong>height:</strong> 
+      <input v-if="this.enableTyping" type="text" :value="this.height" @change="onChangeHeight" />
+      <select v-else :value="this.height" @change="onChangeHeight">
+        <option v-for="opts in selectOptions.height" :key="opts" :value="opts">{{ opts }}</option>
+      </select>
+      <br />
+      <strong>weighted:</strong> 
+      <input v-if="this.enableTyping" type="text" :value="this.weighted" @change="onChangeWeighted" />
+      <select v-else :value="this.weighted" @change="onChangeWeighted">
+        <option v-for="opts in selectOptions.weighted" :key="opts" :value="opts">{{ opts }}</option>
+      </select>
+      <br />
+      <strong>unweighted:</strong> 
+      <input v-if="this.enableTyping" type="text" :value="this.unweighted" @change="onChangeUnweighted" />
+      <select v-else :value="this.unweighted" @change="onChangeUnweighted">
+        <option v-for="opts in selectOptions.unweighted" :key="opts" :value="opts">{{ opts }}</option>
+      </select>
+      <br />
+      <strong>leaning:</strong> 
+      <input v-if="this.enableTyping" type="text" :value="this.leaning" @change="onChangeLeaning" />
+      <select v-else :value="this.leaning" @change="onChangeLeaning">
+        <option v-for="opts in selectOptions.leaning" :key="opts" :value="opts">{{ opts }}</option>
+      </select>
+      <br />
       <strong>delay:</strong> <input type="text" :value="this.timeDelay" style="width: 40px" @change="onChangeDelay" /> sec<br />
 
       <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
@@ -178,12 +203,33 @@ export default {
 
     // time delay for a initialized card
     'timeDelay',
-    // a callback to update delay
-    'updateDelay'
+
+    // callback to update card
+    'updateDelay',
+    'updateDirection',
+    'updateHeight',
+    'updateWeighted',
+    'updateUnweighted',
+    'updateLeaning'
   ],
   methods: {
     onChangeDelay (event) {
       this.updateDelay(this.index, event.target.value)
+    },
+    onChangeDirection (event) {
+      this.updateDirection(this.index, event.target.value)
+    },
+    onChangeHeight (event) {
+      this.updateHeight(this.index, event.target.value)
+    },
+    onChangeWeighted (event) {
+      this.updateWeighted(this.index, event.target.value)
+    },
+    onChangeUnweighted (event) {
+      this.updateUnweighted(this.index, event.target.value)
+    },
+    onChangeLeaning (event) {
+      this.updateLeaning(this.index, event.target.value)
     }
   }
 }
