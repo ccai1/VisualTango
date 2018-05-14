@@ -18,6 +18,7 @@
         :timeDelay="card.delay"
         :removeCard="removeCard"
         :expendCard="expendCard"
+        :enableTyping="enableTyping"
         :updateDelay="updateDelay"
         :updateDirection="updateDirection"
         :updateHeight="updateHeight"
