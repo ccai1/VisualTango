@@ -1,6 +1,8 @@
 VisualTango
 ===========
 
+<strong>NOTE: this web app is only tested in Chrome, some features seem not working in incognito mode.</strong>
+
 ## Table of Contents
 
 1. [Abstract](#abstract)
@@ -9,6 +11,7 @@ VisualTango
 4. [Tools](#tools)
 5. [Blender Model](#blender-model)
 6. [Credits To](#credits-to)
+7. [Demo](#demo)
 
 ## Abstract
 
@@ -85,14 +88,14 @@ This web app contains three parts. A left-side panel used to define a sequence o
 
   The floating buttons are some extra functions provided for ease of use.
   - `Play` click to play the sequence of cards. You won't be able to add new card while playing. After playing the figure will go back to the card that was previously expended.
-  - `Toggle` the button to toggle the typing mode.
+  - `Toggle` the button to toggle the typing mode. Once this button is active, it will be light blue. And all the dropdowns in the add-new-card panel will turn into input boxes.
   - `Clear` clear all the cards in the list by only one click.
   - `Save` download the sequence of cards in a JSON file.
   - `Resume` upload your JSON file to resume your sequence.
 
   ![buttons](images/buttons.png)
 
-  If you have your browser cookie enabled, the web app will frequently store your changes to the sequence to your cookie, so you won't lose anything by click on refresh by accident. For long term purpose, the `D` and `U` buttons should serve it.
+  If you have your browser cookie enabled, the web app will frequently store your changes to the sequence to your cookie, so you won't lose anything by click on refresh by accident. For long term purpose, the `Save` and `Resume` buttons should serve it.
 
 >[Go Top](#table-of-contents)
 
@@ -130,5 +133,11 @@ Also, I have experienced difficulties using the blender-to-three exporter plugin
 Below is a series of Blender tutorial videos that introduced me to the basic skills of using Blender.
 
 - [A series of Blender tutorial video.](http://blender.freemovies.co.uk/stickman/)
+
+>[Go Top](#table-of-contents)
+
+## Demo
+
+[![demo video](https://img.youtube.com/vi/xO7WGC0fHp0/0.jpg)](https://www.youtube.com/watch?v=xO7WGC0fHp0)
 
 >[Go Top](#table-of-contents)
