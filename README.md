@@ -80,6 +80,10 @@ This web app contains three parts. A left-side panel used to define a sequence o
 
   You can arrange their order by drag and drop. You can also delete cards by expend one and click the delete button.
 
+  When you expend one card, you can also edit it. When you changed anything in the card, a submit button and a cancel button will appear. Click submit to push all the changes or cancel to discard the changes. If you click on another card, the changes to the current card will persist.
+
+  ![cards edit](images/cards-edit.png)
+
 ## Right side screen
 
   The screen will render a stick-figure. Simply use mouse to navigate and zoom.
