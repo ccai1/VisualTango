@@ -142,6 +142,6 @@ Below is a series of Blender tutorial videos that introduced me to the basic ski
 
 ## Demo
 
-[![demo video](https://img.youtube.com/vi/xO7WGC0fHp0/0.jpg)](https://www.youtube.com/watch?v=xO7WGC0fHp0)
+[![demo video](https://img.youtube.com/vi/9JfL0ZJZvz0/0.jpg)](https://www.youtube.com/watch?v=9JfL0ZJZvz0)
 
 >[Go Top](#table-of-contents)
