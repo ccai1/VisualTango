@@ -1,4 +1,5 @@
 <template>
+  <center>
   <div class="side-panel">
     <!-- a list of cards -->
     <Dragglable v-model="this.cards" :list="this.cards">
@@ -39,6 +40,7 @@
           @click="onAddingNewCancel()"
     >move</button>
   </div>
+</center>
 </template>
 
 <script>
@@ -82,12 +84,13 @@ export default {
 
 <style scoped>
 .side-panel {
-  position: relative;
+  position: center;
+  /* top: 1%; */
   top: 1%;
   left: 1%;
   bottom: 1%;
   right: 1%;
-  width: 20%;
+  width: 90%;
   height: 98%;
   background-color: #F5F5DC;
   border-radius: 3px;
@@ -101,4 +104,5 @@ export default {
   box-shadow: 0px 0px 1px 1px gray;
   cursor: pointer;
 }
+
 </style>

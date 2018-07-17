@@ -304,8 +304,8 @@ export default {
 
 <style scoped>
 .card {
-  position: relative;
-  width: 96%;
+  position: center;
+  width: 95%;
   top: 2%;
   left: 2%;
   bottom: 2%;

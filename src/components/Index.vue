@@ -1,14 +1,22 @@
 <template>
   <div class="index">
     <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-    <MainFrame :playFrame="this.playFrame"></MainFrame>
+    <MainFrame :playFrame="this.playFrame" ></MainFrame>
     <!-- <Move @add-move="addMove":ref="movez"></Move>
     <Move @add-move="addMove":ref="movez"></Move>
     <Move @add-move="addMove":ref="movez"></Move> -->
 
+    <!-- <Move @add-move="addMove"></Move>
     <Move @add-move="addMove"></Move>
-    <Move @add-move="addMove"></Move>
-    <Move @add-move="addMove"></Move>
+    <Move @add-move="addMove"></Move> -->
+      <div class="move-container">
+        <Move v-for="(move, index) in this.listOfMoves"
+        :index="index"
+        >
+        </Move>
+      </div>
+    <!-- <button @click="reverse">Reverse</button> -->
+
 
     <div class="floating-button-set">
       <!-- <RoundButton
@@ -67,13 +75,16 @@ export default {
 
     }
   },
-  // created() {
-  //   this.listOfMoves[0] = Array.from(preloadData, x => x)
-  //   this.listOfMoves[1] = Array.from(preloadData, x => x)
-  //   this.listOfMoves[2] = Array.from(preloadData, x => x)
+  created() {
+    if (this.listOfMoves.length === 0) {
+      for (let i = 0; i < 3; i+=1) {
+        console.log('this is called infinitely')
+        this.addMove(Array.from(preloadData, x => x))
+      }
+    }
   //   // console.log('listOf 0',this.listOfMoves[0])
   //   // console.log('listOf 1',this.listOfMoves[1])
-  // },
+  },
   mounted () {
     // see if cookie is enabled
     try {
@@ -290,4 +301,11 @@ export default {
   top: 2%;
   left: 22.8%;
 }
+.move-container {
+  width: 22%;
+  top: 1%;
+  height: 99%;
+  overflow: scroll;
+}
+
 </style>

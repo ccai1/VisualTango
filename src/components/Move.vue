@@ -1,7 +1,8 @@
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-  <center><h3> Move </h3></center>
+  <div class="moves">
+  <h3> Move {{this.index + 1}}</h3>
       <SidePanel
         :cards="this.cards"
         :addCard="addCard"
@@ -14,6 +15,7 @@
         :submitChanges="submitChanges"
       ></SidePanel>
   </div>
+</div>
 </template>
 
 <script>
@@ -31,6 +33,7 @@ export default {
   props: [
     // a list of cards
     'listOfCards',
+    'index',
   ],
   data() {
     return {
@@ -202,5 +205,14 @@ export default {
   height: 100%;
   width: 100%;
   background-color: #A9A9A9;
+}
+.move {
+  top: 1%;
+  width: 100%;
+}
+.moves {
+  top: 1%;
+  width: 100%;
+  position: relative;
 }
 </style>
