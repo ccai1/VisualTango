@@ -1,6 +1,7 @@
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
+  <center><h3> Move </h3></center>
       <SidePanel
         :cards="this.cards"
         :addCard="addCard"
@@ -36,6 +37,9 @@ export default {
       cards: [],
       inserting: false,
       enableTyping: false,
+      playing: false,
+      currentCard: 0,
+      inserting: false,
     }
   },
   created() {

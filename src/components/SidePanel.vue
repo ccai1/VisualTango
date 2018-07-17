@@ -33,7 +33,11 @@
       :enableTyping="this.enableTyping"
     ></Card>
     <Card v-else @click.native="onClickAddNew()"></Card>
-    <br /><br />
+    <button
+          class="side-button"
+          style="border: 5px; background-color: #1E90FF"
+          @click="onAddingNewCancel()"
+    >move</button>
   </div>
 </template>
 
@@ -89,5 +93,12 @@ export default {
   border-radius: 3px;
   box-shadow: 0px 0px 10px 1px;
   overflow: auto;
+}
+.side-button {
+  color: white;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1px 1px gray;
+  cursor: pointer;
 }
 </style>

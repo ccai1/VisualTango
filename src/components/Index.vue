@@ -2,14 +2,19 @@
   <div class="index">
     <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
     <MainFrame :playFrame="this.playFrame"></MainFrame>
+    <!-- <Move @add-move="addMove":ref="movez"></Move>
+    <Move @add-move="addMove":ref="movez"></Move>
+    <Move @add-move="addMove":ref="movez"></Move> -->
+
     <Move @add-move="addMove"></Move>
     <Move @add-move="addMove"></Move>
     <Move @add-move="addMove"></Move>
+
     <div class="floating-button-set">
-      <RoundButton
+      <!-- <RoundButton
         type="move"
         :onClickHandler="handleMoveButton"
-      ></RoundButton>
+      ></RoundButton> -->
       <RoundButton
         type="dance"
         :onClickHandler="handleDanceButton"
@@ -133,26 +138,10 @@ export default {
     //   for (let i = 0; i < this.listOfMoves.length; i++) {
     //     let oneMove = this.listOfMoves[i]
     //     console.log('move', oneMove)
-    //     setTimeout(this.handleOneMove(oneMove), 1000)
+    //     //setTimeout(this.handleOneMove(oneMove), 8000)
+    //     this.handleOneMove(oneMove)
     //   }
     // },
-    handleMoveButton () {
-      console.log('move clicked', this.listOfMoves.length)
-      var cur = 0
-      let move = () => {
-        while (cur < this.listOfMoves.length - 1) {
-          console.log('move', this.currentMove)
-          setTimeout(doOne, this.listOfMoves[cur][0].delay * 20)
-          cur += 1
-        }
-      }
-      let doOne = () => {
-        console.log(cur)
-        let oneMove = this.listOfMoves[cur]
-        this.handleOneMove(oneMove)
-      }
-      move()
-    },
     handleOneMove(oneMove) {
       // set playing flag and counter
       if (oneMove.length > 0) {
@@ -204,14 +193,40 @@ export default {
         console.log('start play')
         this.clock = (new Date()).getTime() // set the first timer
         this.playFrame = matchFrameIndex(oneMove[this.currentCard])
-        console.log('play card: ', this.currentCard)
+        console.log('play cardd: ', this.currentCard)
         move()
       }
     },
     handleDanceButton () {
-      console.log('starting loop')
-      setTimeout(this.handleMoveButton(), 7000)
+      console.log('move clicked', this.listOfMoves.length)
+      var cur = 0
+      let move = () => {
+        let oneMove = this.listOfMoves[cur]
+        let currentDelay = parseFloat(oneMove[0].delay * (oneMove.length - 1))
+        let currentClock = (new Date()).getTime()
+        let currentDelayMilli = currentDelay * 1000
+        if (currentClock - this.clock >= currentDelayMilli) {
+          if (cur == this.listOfMoves.length) {
+            console.log('end move')
+          }
+          else {
+            console.log('move', this.currentMove)
+            cur += 1
+            this.clock = (new Date()).getTime()
+            this.handleOneMove(oneMove)
+            setTimeout(move, 1)
+          }
+        }
+        else {
+          setTimeout(move, 1)
+        }
+      }
+      move()
     },
+    // handleDanceButton () {
+    //   console.log('starting loop')
+    //   setTimeout(this.handleMoveButton(), 7000)
+    // },
     handleClearButton () {
       this.cards = []
       this.playFrame = 0
