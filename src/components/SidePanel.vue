@@ -68,6 +68,10 @@ export default {
   components: {
     'Card': Card,
     'Dragglable': Dragglable
+  },
+  created() {
+    console.log('sidePanel called')
+    console.log(this.cards)
   }
 }
 </script>

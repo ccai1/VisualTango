@@ -1,39 +1,63 @@
 <template>
+
+  <!-- one card -->
+
   <div v-if="type === 'card' && initialized && expended"
     class="card"
   >
+
+  <!-- card name -->
+
     <strong>{{ this.title }}</strong><br />
     <div style="text-align: left; padding-left: 5px">
+
+      <!-- direction -->
+
       <strong>direction:</strong>
       <input v-if="this.enableTyping" type="text" v-model="selected.direction" @change="onChangeData" />
       <select v-else v-model="selected.direction" @change="onChangeData">
         <option v-for="opts in selectOptions.direction" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
+
+      <!-- height -->
+
       <strong>height:</strong>
       <input v-if="this.enableTyping" type="text" v-model="selected.height" @change="onChangeData" />
       <select v-else v-model="selected.height" @change="onChangeData">
         <option v-for="opts in selectOptions.height" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
+
+      <!-- weighted -->
+
       <strong>weighted:</strong>
       <input v-if="this.enableTyping" type="text" v-model="selected.weighted" @change="onChangeData" />
       <select v-else v-model="selected.weighted" @change="onChangeData">
         <option v-for="opts in selectOptions.weighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
+
+      <!-- unweighted -->
+
       <strong>unweighted:</strong>
       <input v-if="this.enableTyping" type="text" v-model="selected.unweighted" @change="onChangeData" />
       <select v-else v-model="selected.unweighted" @change="onChangeData">
         <option v-for="opts in selectOptions.unweighted" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
+
+      <!-- leaning -->
+
       <strong>leaning:</strong>
       <input v-if="this.enableTyping" type="text" v-model="selected.leaning" @change="onChangeData" />
       <select v-else :value="this.leaning" @change="onChangeData">
         <option v-for="opts in selectOptions.leaning" :key="opts" :value="opts">{{ opts }}</option>
       </select>
       <br />
+
+      <!-- delay -->
+
       <strong>delay:</strong> <input type="text" v-model="delay" style="width: 40px" @change="onChangeData" /> sec<br />
 
       <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #FFD700" @click="onClickSubmitChanges">submit</button>
@@ -42,6 +66,10 @@
       <br /><br />
     </div>
   </div>
+
+
+<!-- not expended -->
+
   <div v-else-if="type === 'card' && initialized && !expended"
     class="card"
     @click="expendCard(index)"

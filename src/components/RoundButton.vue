@@ -1,11 +1,17 @@
 <template>
 <a @click="onClickHandler()" style="text-decoration:none;">
-  <div v-if="this.type === 'play'"
+  <div v-if="this.type === 'move'"
     class="round-button"
     :style="{
       backgroundColor: '#32CD32'
     }"
-  ><span class="button-text">Play</span></div>
+  ><span class="button-text">Move</span></div>
+  <div v-else-if="this.type === 'dance'"
+    class="round-button"
+    :style="{
+      backgroundColor: '#9370DB'
+    }"
+  ><span class="button-text">Dance</span></div>
   <div v-else-if="this.type === 'typing' && this.enableTyping && this.enableTyping === true"
     class="round-button"
     :style="{
