@@ -13,6 +13,7 @@
         :expendCard="expendCard"
         :enableTyping="this.enableTyping"
         :submitChanges="submitChanges"
+        :handleOneMove="handleOneMove"
       ></SidePanel>
   </div>
 </div>
@@ -34,6 +35,7 @@ export default {
     // a list of cards
     'listOfCards',
     'index',
+    'handleOneMove',
   ],
   data() {
     return {

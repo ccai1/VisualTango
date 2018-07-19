@@ -13,6 +13,7 @@
         <Move v-for="(move, index) in this.listOfMoves"
         :index="index"
         :listOfCards="move.listOfCards"
+        :handleOneMove="handleOneMove"
         >
         </Move>
       </div>

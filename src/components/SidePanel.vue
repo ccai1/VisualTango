@@ -37,7 +37,7 @@
     <button
           class="side-button"
           style="border: 5px; background-color: #1E90FF"
-          @click="onAddingNewCancel()"
+          @click="testingOneMove()"
     >move</button>
   </div>
 </center>
@@ -69,12 +69,18 @@ export default {
     'enableTyping',
 
     // update
-    'submitChanges'
+    'submitChanges',
+    'handleOneMove',
   ],
   components: {
     'Card': Card,
     'Dragglable': Dragglable
   },
+  methods: {
+    testingOneMove (){
+      this.handleOneMove(this.cards)
+    }
+  }
 }
 </script>
 
