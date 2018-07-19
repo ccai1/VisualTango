@@ -46,7 +46,9 @@ export default {
     }
   },
   created() {
+    this.cards = this.listOfCards
     if (this.cards.length === 0) {
+      console.log('move called')
       this.cards = Array.from(preloadData, x => x)
     }
   },
@@ -57,7 +59,6 @@ export default {
     this.$emit('add-move', this.cards)
     try {
       if (isCookieEnabled()) {
-        console.log('moveTesting')
         let previousData = JSON.parse(getCookie('this.cards'))
         if (previousData instanceof Array) {
           // set data

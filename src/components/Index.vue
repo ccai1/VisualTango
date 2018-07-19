@@ -12,6 +12,7 @@
       <div class="move-container">
         <Move v-for="(move, index) in this.listOfMoves"
         :index="index"
+        :listOfCards="move.listOfCards"
         >
         </Move>
       </div>
@@ -77,9 +78,14 @@ export default {
   },
   created() {
     if (this.listOfMoves.length === 0) {
+      console.log('created called')
       for (let i = 0; i < 3; i+=1) {
-        console.log('this is called infinitely')
-        this.addMove(Array.from(preloadData, x => x))
+        let move = {
+          listOfCards: Array.from(preloadData, x => x),
+          index: i
+        }
+        //console.log('this is one move', move)
+        this.addMove(move)
       }
     }
   //   // console.log('listOf 0',this.listOfMoves[0])
@@ -133,9 +139,7 @@ export default {
   methods: {
     // button handlers
     addMove (move) {
-      console.log('move added')
       this.listOfMoves.push(move)
-      console.log('listOfMoves is of length', this.listOfMoves.length)
       this.addListOfMoves(this.listOfMoves)
     },
     // addMove(moves) {
@@ -156,8 +160,6 @@ export default {
     handleOneMove(oneMove) {
       // set playing flag and counter
       if (oneMove.length > 0) {
-        console.log('handling', oneMove)
-        console.log('current card:', this.currentCard)
         this.playing = true
         this.currentCard = 0
         this.inserting = false
@@ -165,7 +167,6 @@ export default {
         for (let i = 0; i < oneMove.length; i++) {
           if (oneMove[i].expended) {
             oneMove[i].expended = false
-            console.log('breaking')
             break
           }
         }
@@ -201,18 +202,20 @@ export default {
         }
 
         // go!
-        console.log('start play')
         this.clock = (new Date()).getTime() // set the first timer
         this.playFrame = matchFrameIndex(oneMove[this.currentCard])
-        console.log('play cardd: ', this.currentCard)
         move()
       }
     },
     handleDanceButton () {
-      console.log('move clicked', this.listOfMoves.length)
       var cur = 0
+      // for (let i = 0; i < this.listOfMoves.length; i++) {
+      //   for (let j = 0; j < this.listOfMoves[i].length; j++) {
+      //     console.log(this.listOfMoves[i][j].title)
+      //   }
+      // }
       let move = () => {
-        let oneMove = this.listOfMoves[cur]
+        let oneMove = this.listOfMoves[cur].listOfCards
         let currentDelay = parseFloat(oneMove[0].delay * (oneMove.length - 1))
         let currentClock = (new Date()).getTime()
         let currentDelayMilli = currentDelay * 1000
@@ -221,7 +224,6 @@ export default {
             console.log('end move')
           }
           else {
-            console.log('move', this.currentMove)
             cur += 1
             this.clock = (new Date()).getTime()
             this.handleOneMove(oneMove)

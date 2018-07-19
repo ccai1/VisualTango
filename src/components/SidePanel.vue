@@ -75,10 +75,6 @@ export default {
     'Card': Card,
     'Dragglable': Dragglable
   },
-  created() {
-    console.log('sidePanel called')
-    console.log(this.cards)
-  }
 }
 </script>
 
