@@ -2,44 +2,20 @@
   <div class="index">
     <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
     <MainFrame :playFrame="this.playFrame" ></MainFrame>
-    <!-- <Move @add-move="addMove":ref="movez"></Move>
-    <Move @add-move="addMove":ref="movez"></Move>
-    <Move @add-move="addMove":ref="movez"></Move> -->
 
-    <!-- <Move @add-move="addMove"></Move>
-    <Move @add-move="addMove"></Move>
-    <Move @add-move="addMove"></Move> -->
-    <h2>&#x219e
-    <button
+    <!-- <button
         class="basic-button"
         style="border: 5px; background-color: #2554C7; color: white"
-    >library</button>
-    </h2>
-      <div class="move-container">
-      <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
-        <Move v-for="(move, moveIndex) in this.listOfMoves"
-        :key="index"
-        :moveIndex="moveIndex"
-        :listOfCards="move.listOfCards"
-        :handleOneMove="handleOneMove"
-        :removeOneMove="removeOneMove"
-        >
-        </Move>
-      </Dragglable><br>
-      <button
-            class="basic-button"
-            style="border: 5px; background-color: green; color: white"
-            @click="addNewMove()"
-      >add new move</button><br><br>
+        @click="this.$router.push('')"
+    >library</button> -->
+      <div class="sidePanel-container">
+        <SidePanel
+          :listOfMoves="listOfMoves"
+          :handleOneMove="handleOneMove"
+        ></SidePanel>
       </div>
-    <!-- <button @click="reverse">Reverse</button> -->
-
 
     <div class="floating-button-set">
-      <!-- <RoundButton
-        type="move"
-        :onClickHandler="handleMoveButton"
-      ></RoundButton> -->
       <RoundButton
         type="dance"
         :onClickHandler="handleDanceButton"
@@ -71,13 +47,11 @@
 <script>
 import MainFrame from './MainFrame.vue'
 import RoundButton from './RoundButton.vue'
-import Move from './Move.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import { validateCard, matchFrameIndex } from '../helper/cardHelper'
-import preloadData from '../../static/preload.json'
 import { download } from '../helper/fileHelper'
 import axios from 'axios'
-import Dragglable from 'vuedraggable'
+import SidePanel from './SidePanel'
 
 export default {
   data () {
@@ -92,20 +66,6 @@ export default {
       playFrame: 0
 
     }
-  },
-  created() {
-    if (this.listOfMoves.length === 0) {
-      for (let i = 0; i < 3; i+=1) {
-        let move = {
-          listOfCards: Array.from(preloadData, x => x),
-          index: i
-        }
-        //console.log('this is one move', move)
-        this.addMove(move)
-      }
-    }
-  //   // console.log('listOf 0',this.listOfMoves[0])
-  //   // console.log('listOf 1',this.listOfMoves[1])
   },
   mounted () {
     // see if cookie is enabled
@@ -143,8 +103,7 @@ export default {
   components: {
     'MainFrame': MainFrame,
     'RoundButton': RoundButton,
-    'Move': Move,
-    'Dragglable': Dragglable,
+    'SidePanel': SidePanel,
   },
   // events: {
   //   addMove (move) {
@@ -155,37 +114,37 @@ export default {
   // },
   methods: {
     // button handlers
-    addMove (move) {
-      this.listOfMoves.push(move)
-      this.addListOfMoves(this.listOfMoves)
-    },
     // addMove(moves) {
     //   this.listOfMoves = moves
     // }
-    addListOfMoves(list) {
-      this.listOfMoves = list
-    },
-    // handleMoveButton () {
-    //   console.log('move clicked', this.listOfMoves.length)
-    //   for (let i = 0; i < this.listOfMoves.length; i++) {
-    //     let oneMove = this.listOfMoves[i]
-    //     console.log('move', oneMove)
-    //     //setTimeout(this.handleOneMove(oneMove), 8000)
-    //     this.handleOneMove(oneMove)
-    //   }
-    // },
-    addNewMove() {
-      let move = {
-        listOfCards: Array.from(preloadData, x => x),
-        index: this.listOfMoves.length,
+    handleDanceButton () {
+      var cur = 0
+      // for (let i = 0; i < this.listOfMoves.length; i++) {
+      //   for (let j = 0; j < this.listOfMoves[i].length; j++) {
+      //     console.log(this.listOfMoves[i][j].title)
+      //   }
+      // }
+      let move = () => {
+        let oneMove = this.listOfMoves[cur].cards
+        let currentDelay = parseFloat(oneMove[0].delay * (oneMove.length - 1))
+        let currentClock = (new Date()).getTime()
+        let currentDelayMilli = currentDelay * 1000
+        if (currentClock - this.clock >= currentDelayMilli) {
+          if (cur == this.listOfMoves.length) {
+            console.log('end move')
+          }
+          else {
+            cur += 1
+            this.clock = (new Date()).getTime()
+            this.handleOneMove(oneMove)
+            setTimeout(move, 1)
+          }
+        }
+        else {
+          setTimeout(move, 1)
+        }
       }
-      //console.log('this is one move', move)
-      this.addMove(move)
-    },
-    removeOneMove(index) {
-      if (index >= 0 && index <= this.listOfMoves.length - 1) {
-        this.listOfMoves.splice(index, 1)
-      }
+      move()
     },
     handleOneMove(oneMove) {
       // set playing flag and counter
@@ -237,41 +196,12 @@ export default {
         move()
       }
     },
-    handleDanceButton () {
-      var cur = 0
-      // for (let i = 0; i < this.listOfMoves.length; i++) {
-      //   for (let j = 0; j < this.listOfMoves[i].length; j++) {
-      //     console.log(this.listOfMoves[i][j].title)
-      //   }
-      // }
-      let move = () => {
-        let oneMove = this.listOfMoves[cur].listOfCards
-        let currentDelay = parseFloat(oneMove[0].delay * (oneMove.length - 1))
-        let currentClock = (new Date()).getTime()
-        let currentDelayMilli = currentDelay * 1000
-        if (currentClock - this.clock >= currentDelayMilli) {
-          if (cur == this.listOfMoves.length) {
-            console.log('end move')
-          }
-          else {
-            cur += 1
-            this.clock = (new Date()).getTime()
-            this.handleOneMove(oneMove)
-            setTimeout(move, 1)
-          }
-        }
-        else {
-          setTimeout(move, 1)
-        }
-      }
-      move()
-    },
     // handleDanceButton () {
     //   console.log('starting loop')
     //   setTimeout(this.handleMoveButton(), 7000)
     // },
     handleClearButton () {
-      this.listOfCards = []
+      this.cards = []
       this.playFrame = 0
     },
     handleTypingButton () {
@@ -279,7 +209,7 @@ export default {
     },
     handleDownloadButton () {
       if (!this.playing) {
-        download('poses', this.listOfCards)
+        download('poses', this.cards)
       }
     },
     handleUploadButton () {
@@ -333,16 +263,10 @@ export default {
   top: 2%;
   left: 22.8%;
 }
-.move-container {
+.sidePanel-container {
+  height: 98%;
+  padding-top: 0.5%;
   width: 22%;
-  top: 1%;
-  height: 88%;
   overflow: scroll;
 }
-.basic-button {
-  border-radius: 3px;
-  box-shadow: 0px 0px 3px 3px gray;
-  font-size: 14px;
-}
-
 </style>

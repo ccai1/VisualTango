@@ -1,49 +1,52 @@
 <template>
   <center>
   <div class="side-panel">
-    <!-- a list of cards -->
-    <Dragglable v-model="this.cards" :list="this.cards">
-      <Card v-for="(card, index) in this.cards"
-        :key="index"
-        :index="index"
-        :id="'card-' + index"
-        :title="card.title"
-        :type="card.type"
-        :initialized="card.initialized"
-        :expended="card.expended"
-        :direction="card.direction"
-        :height="card.height"
-        :weighted="card.weighted"
-        :unweighted="card.unweighted"
-        :leaning="card.leaning"
-        :timeDelay="card.delay"
-        :removeCard="removeCard"
-        :expendCard="expendCard"
-        :enableTyping="enableTyping"
-        :submitChanges="submitChanges"
-      >
-      </Card>
-    </Dragglable>
 
-    <!-- inserting a new card -->
-    <Card v-if="this.inserting"
-      type="card"
-      :initialized="false"
-      :onAddingNewSubmit="this.addCard"
-      :onAddingNewCancel="this.onClickAddNewCancel"
-      :enableTyping="this.enableTyping"
-    ></Card>
-    <Card v-else @click.native="onClickAddNew()"></Card>
+    <Slideout :touch="false" :duration=5 :toggleSelectors="['.basic-button', '.lib-button']" @on-open="logger" class="slideout">
+      <nav id="menu">
+        <Library
+          :handleOneMove="handleOneMove"
+          :listOfMoves="listOfMoves"
+          :addMove="addMove"
+        ></Library>
+      </nav>
+      <main id="panel">
+  			<header>
+  				<div>
+            <button class="basic-button">&#x219e; library</button>
+          </div>
+  			</header>
+  		</main>
+    </Slideout>
+
+   <!-- <header class="mdl-layout__header">
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
+      </div>
+    </header> -->
+
+    <h2>Your Dance</h2>
+
+    <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
+      <Move v-for="(move, moveIndex) in this.listOfMoves"
+      :key="moveIndex"
+      :cards="move.cards"
+      :moveIndex="moveIndex"
+      :handleOneMove="handleOneMove"
+      :removeOneMove="removeOneMove"
+      :addMove="addMove"
+      >
+      </Move>
+
+    </Dragglable><br>
+
     <button
-          class="side-button"
-          style="border: 5px; background-color: #1E90FF"
-          @click="testingThisMove()"
-    >move</button>
-    <button
-          class="side-button"
-          style="border: 5px; background-color: #DC143C"
-          @click="removeThisMove()"
-    >delete</button>
+          class="basic-button"
+          style="border: 5px; background-color: green; color: white"
+          @click="addNewMove()"
+    >add new move</button><br><br>
   </div>
 </center>
 </template>
@@ -51,45 +54,66 @@
 <script>
 import Card from './Card.vue'
 import Dragglable from 'vuedraggable'
+import Slideout from 'vue-slideout'
+import Move from './Move.vue'
+import preloadData from '../../static/preload.json'
+import Library from './Library.vue'
 
 export default {
   props: [
-    // a list of cards
-    'cards',
-    'moveIndex',
-    // modify card list
-    'addCard',
-    'removeCard',
-
-    // open and close add new panel
-    'inserting', // flag
-    'onClickAddNew',
-    'onClickAddNewCancel',
-
-    // expending
-    'expendCard',
-
-    // a flag whether typing is enabled
-    // if it is enabled, then all the dropdowns need to be typing
-    'enableTyping',
-
-    // update
-    'submitChanges',
+    'listOfMoves',
     'handleOneMove',
-    'removeOneMove',
-
   ],
   components: {
+    'Move': Move,
     'Card': Card,
-    'Dragglable': Dragglable
+    'Dragglable': Dragglable,
+    'Slideout': Slideout,
+    'Library': Library,
+  },
+  mounted() {
+    if (this.listOfMoves.length === 0) {
+      for (let i = 0; i < 3; i+=1) {
+        let move = {
+          cards: Array.from(preloadData, x => x),
+          moveIndex: i,
+          isSample: 'false',
+        }
+        console.log('this is one move', move)
+        this.addMove(move)
+      }
+    }
+    console.log(this.$children[0].slideout.isOpen());
+  //   // console.log('listOf 0',this.listOfMoves[0])
+  //   // console.log('listOf 1',this.listOfMoves[1])
   },
   methods: {
-    testingThisMove () {
-      this.handleOneMove(this.cards)
+    logger() {
+      console.log("open event")
     },
-    removeThisMove () {
-      console.log('the first one is', this.cards[0].title)
-      this.removeOneMove(this.moveIndex)
+    open () {
+      console.log('slideoutOpen')
+    },
+    addMove (move) {
+      this.listOfMoves.push(move)
+      this.addListOfMoves(this.listOfMoves)
+    },
+    addListOfMoves(list) {
+      this.listOfMoves = list
+    },
+    addNewMove() {
+      let move = {
+        cards: Array.from(preloadData, x => x),
+        index: this.listOfMoves.length,
+        isSample: 'false',
+      }
+      //console.log('this is one move', move)
+      this.addMove(move)
+    },
+    removeOneMove(index) {
+      if (index >= 0 && index <= this.listOfMoves.length - 1) {
+        this.listOfMoves.splice(index, 1)
+      }
     },
   }
 }
@@ -97,25 +121,64 @@ export default {
 
 <style scoped>
 .side-panel {
-  position: center;
-  /* top: 1%; */
-  top: 1%;
   left: 1%;
   bottom: 1%;
   right: 1%;
   width: 90%;
-  height: 98%;
-  background-color: #F5F5DC;
+  height: 80%;
+  background-color: #FFFAF0;
   border-radius: 3px;
   box-shadow: 0px 0px 10px 1px;
   overflow: auto;
 }
-.side-button {
-  color: white;
-  position: relative;
-  border-radius: 3px;
-  box-shadow: 0px 0px 1px 1px gray;
-  cursor: pointer;
+.slideout {
+  padding-top: 11%;
 }
-
+.slideout-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 256px;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    z-index: 0;
+    display: none;
+    background-color: #FFFAF0;
+    color: #2c3e50;
+  }
+  .slideout-menu-left {
+    left: 0;
+  }
+  .slideout-menu-right {
+    right: 0;
+  }
+  .slideout-panel {
+    /* background-color: #4B5; */
+    position: relative;
+    z-index: 1;
+  }
+  .slideout-open,
+  .slideout-open body,
+  .slideout-open .slideout-panel {
+    overflow: scroll;
+  }
+  .slideout-open .slideout-menu {
+    display: block;
+  }
+  .basic-button {
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px 3px gray;
+    font-size: 14px;
+  }
+  #menu {
+    top: 1%;
+    height: 98%;
+    left: 1.1%;
+    box-shadow: 0px 0px 1px 1px gray;
+    border-radius: 3px;
+    z-index: 1;
+    width: 19.8%;
+  }
 </style>
