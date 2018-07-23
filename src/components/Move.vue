@@ -1,63 +1,87 @@
 <!-- DELETE BUTTON DOESN'T work
-MOVES NOT DRAGGABLE -->
+MOVES NOT DRAGGABLE
+TOP HTML DOESN'T WORK
+ -->
 
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-  <div class="moves">
-  <h3> Move {{this.moveIndex + 1}}</h3>
-      <SidePanel
-        :moveIndex="moveIndex"
-        :cards="this.cards"
-        :addCard="addCard"
+  <h3>Move {{this.moveIndex + 1}}</h3>
+  <Dragglable v-model="this.cards" :list="this.cards">
+      <Card v-for="(card, index) in this.cards"
+        :key="index"
+        :index="index"
+        :id="'card-' + index"
+        :title="card.title"
+        :type="card.type"
+        :initialized="card.initialized"
+        :expended="card.expended"
+        :direction="card.direction"
+        :height="card.height"
+        :weighted="card.weighted"
+        :unweighted="card.unweighted"
+        :leaning="card.leaning"
+        :timeDelay="card.delay"
         :removeCard="removeCard"
-        :inserting="this.inserting"
-        :onClickAddNewCancel="onClickAddNewCancel"
-        :onClickAddNew="onClickAddNew"
         :expendCard="expendCard"
-        :enableTyping="this.enableTyping"
+        :enableTyping="enableTyping"
         :submitChanges="submitChanges"
-        :handleOneMove="handleOneMove"
-        :removeOneMove="removeOneMove"
-      ></SidePanel>
+      >
+      </Card>
+  </Dragglable>
+  <Card v-if="this.inserting"
+    type="card"
+    :initialized="false"
+    :onAddingNewSubmit="this.addCard"
+    :onAddingNewCancel="this.onClickAddNewCancel"
+    :enableTyping="this.enableTyping"
+  ></Card>
+  <Card v-else @click.native="onClickAddNew()"></Card>
+    <button
+          class="side-button"
+          style="border: 5px; background-color: #1E90FF"
+          @click="testingThisMove()"
+    >move</button>
+    <button
+          class="side-button"
+          style="border: 5px; background-color: #DC143C"
+          @click="removeThisMove()"
+    >delete</button>
+    <br><br>
   </div>
-</div>
 </template>
 
 <script>
+import Card from './Card.vue'
 import SidePanel from './SidePanel.vue'
 import Index from './Index.vue'
 import { validateCard, matchFrameIndex } from '../helper/cardHelper'
 import preloadData from '../../static/preload.json'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import axios from 'axios'
+import Dragglable from 'vuedraggable'
 
 export default {
   components: {
     'SidePanel': SidePanel,
+    'Card': Card,
+    'Dragglable': Dragglable,
   },
   props: [
     // a list of cards
-    'listOfCards',
+    'cards',
     'moveIndex',
     'handleOneMove',
     'removeOneMove',
+    'addMove',
   ],
   data() {
     return {
-      cards: [],
       inserting: false,
       enableTyping: false,
       playing: false,
       currentCard: 0,
       inserting: false,
-    }
-  },
-  created() {
-    this.cards = this.listOfCards
-    if (this.cards.length === 0) {
-      console.log('move called')
-      this.cards = Array.from(preloadData, x => x)
     }
   },
   mounted () {
@@ -99,6 +123,13 @@ export default {
   },
   methods: {
     // add a new card element to the list
+    testingThisMove () {
+      this.handleOneMove(this.cards)
+    },
+    removeThisMove () {
+      console.log('the first one is', this.cards[0].title)
+      this.removeOneMove(this.moveIndex)
+    },
     insertCardAfter (index, after) {
       if (index !== after && index >= 0 && index <= this.cards.length - 1 && after >= 0 && after <= this.cards.length - 1) {
         let element = this.cards[index]
@@ -202,23 +233,16 @@ export default {
 </script>
 
 <style scoped>
-.index {
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: #A9A9A9;
-}
 .move {
   top: 1%;
   width: 100%;
-}
-.moves {
-  top: 1%;
-  width: 100%;
   position: relative;
+}
+.side-button {
+  color: white;
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1px 1px gray;
+  cursor: pointer;
 }
 </style>
