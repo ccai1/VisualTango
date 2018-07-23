@@ -114,9 +114,6 @@ export default {
   // },
   methods: {
     // button handlers
-    open () {
-      console.log('slideoutOpen')
-    },
     // addMove(moves) {
     //   this.listOfMoves = moves
     // }
@@ -204,7 +201,7 @@ export default {
     //   setTimeout(this.handleMoveButton(), 7000)
     // },
     handleClearButton () {
-      this.listOfCards = []
+      this.cards = []
       this.playFrame = 0
     },
     handleTypingButton () {
@@ -212,7 +209,7 @@ export default {
     },
     handleDownloadButton () {
       if (!this.playing) {
-        download('poses', this.listOfCards)
+        download('poses', this.cards)
       }
     },
     handleUploadButton () {

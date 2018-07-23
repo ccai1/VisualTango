@@ -1,6 +1,7 @@
 <!-- DELETE BUTTON DOESN'T work
 MOVES NOT DRAGGABLE
 TOP HTML DOESN'T WORK
+do clear and download buttons
  -->
 
 <template>
@@ -47,7 +48,7 @@ TOP HTML DOESN'T WORK
           style="border: 5px; background-color: #DC143C"
           @click="removeThisMove()"
     >delete</button>
-    <br><br>
+    <br>
   </div>
 </template>
 

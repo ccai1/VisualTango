@@ -1,22 +1,28 @@
 <template>
   <center>
   <div class="side-panel">
-    <!-- a list of cards -->
-    <h2>&#x219e
-    </h2>
-    <!-- <Slideout menu="#menu" panel="#panel" :toggleSelectors="['.toggle-button']" @on-open="open">
-      <nav class="menu">
-        <div>Menu</div>
+
+    <Slideout :touch="false" :duration=1 :toggleSelectors="['.basic-button', '.lib-button']" @on-open="logger" class="slideout">
+      <nav id="menu">
+        <!-- <button class="basic-button">&#x219e  Back</button> -->
+        <Library></Library>
       </nav>
-      <main class="panel">
-        <header>
-          <div>
-            <button class="toggle-button">☰</button>
-            Panel
+      <main id="panel">
+  			<header>
+  				<div>
+            <button class="basic-button">&#x219e; library</button>
           </div>
-        </header>
-      </main>
-    </Slideout> -->
+  			</header>
+  		</main>
+    </Slideout>
+
+   <!-- <header class="mdl-layout__header">
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
+      </div>
+    </header> -->
 
     <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
       <Move v-for="(move, moveIndex) in this.listOfMoves"
@@ -46,6 +52,7 @@ import Dragglable from 'vuedraggable'
 import Slideout from 'vue-slideout'
 import Move from './Move.vue'
 import preloadData from '../../static/preload.json'
+import Library from './Library.vue'
 
 export default {
   props: [
@@ -57,8 +64,9 @@ export default {
     'Card': Card,
     'Dragglable': Dragglable,
     'Slideout': Slideout,
+    'Library': Library,
   },
-  created() {
+  mounted() {
     if (this.listOfMoves.length === 0) {
       for (let i = 0; i < 3; i+=1) {
         let move = {
@@ -69,10 +77,17 @@ export default {
         this.addMove(move)
       }
     }
+    console.log(this.$children[0].slideout.isOpen());
   //   // console.log('listOf 0',this.listOfMoves[0])
   //   // console.log('listOf 1',this.listOfMoves[1])
   },
   methods: {
+    logger() {
+      console.log("open event")
+    },
+    open () {
+      console.log('slideoutOpen')
+    },
     addMove (move) {
       this.listOfMoves.push(move)
       this.addListOfMoves(this.listOfMoves)
@@ -109,6 +124,9 @@ export default {
   box-shadow: 0px 0px 10px 1px;
   overflow: auto;
 }
+.slideout {
+  padding: 11%;
+}
 .slideout-menu {
     position: fixed;
     top: 0;
@@ -129,17 +147,14 @@ export default {
     right: 0;
   }
   .slideout-panel {
-    background-color: #4B5;
-    color: white;
+    /* background-color: #4B5; */
     position: relative;
     z-index: 1;
-    will-change: transform;
-    min-height: 100vh;
   }
   .slideout-open,
   .slideout-open body,
   .slideout-open .slideout-panel {
-    overflow: hidden;
+    overflow: scroll;
   }
   .slideout-open .slideout-menu {
     display: block;
@@ -149,5 +164,13 @@ export default {
     box-shadow: 0px 0px 3px 3px gray;
     font-size: 14px;
   }
-
+  #menu {
+    top: 1%;
+    height: 98%;
+    left: 1.1%;
+    box-shadow: 0px 0px 1px 1px gray;
+    border-radius: 3px;
+    z-index: 1;
+    width: 19.8%;
+  }
 </style>
