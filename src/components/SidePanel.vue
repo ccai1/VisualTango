@@ -2,10 +2,13 @@
   <center>
   <div class="side-panel">
 
-    <Slideout :touch="false" :duration=1 :toggleSelectors="['.basic-button', '.lib-button']" @on-open="logger" class="slideout">
+    <Slideout :touch="false" :duration=5 :toggleSelectors="['.basic-button', '.lib-button']" @on-open="logger" class="slideout">
       <nav id="menu">
-        <!-- <button class="basic-button">&#x219e  Back</button> -->
-        <Library></Library>
+        <Library
+          :handleOneMove="handleOneMove"
+          :listOfMoves="listOfMoves"
+          :addMove="addMove"
+        ></Library>
       </nav>
       <main id="panel">
   			<header>
@@ -23,6 +26,8 @@
         <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
       </div>
     </header> -->
+
+    <h2>Your Dance</h2>
 
     <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
       <Move v-for="(move, moveIndex) in this.listOfMoves"
@@ -71,7 +76,8 @@ export default {
       for (let i = 0; i < 3; i+=1) {
         let move = {
           cards: Array.from(preloadData, x => x),
-          moveIndex: i
+          moveIndex: i,
+          isSample: 'false',
         }
         console.log('this is one move', move)
         this.addMove(move)
@@ -99,6 +105,7 @@ export default {
       let move = {
         cards: Array.from(preloadData, x => x),
         index: this.listOfMoves.length,
+        isSample: 'false',
       }
       //console.log('this is one move', move)
       this.addMove(move)
@@ -119,13 +126,13 @@ export default {
   right: 1%;
   width: 90%;
   height: 80%;
-  background-color: #F5F5DC;
+  background-color: #FFFAF0;
   border-radius: 3px;
   box-shadow: 0px 0px 10px 1px;
   overflow: auto;
 }
 .slideout {
-  padding: 11%;
+  padding-top: 11%;
 }
 .slideout-menu {
     position: fixed;
@@ -137,8 +144,8 @@ export default {
     -webkit-overflow-scrolling: touch;
     z-index: 0;
     display: none;
-    background-color: #1D1F20;
-    color: white;
+    background-color: #FFFAF0;
+    color: #2c3e50;
   }
   .slideout-menu-left {
     left: 0;
@@ -160,6 +167,7 @@ export default {
     display: block;
   }
   .basic-button {
+    cursor: pointer;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 3px gray;
     font-size: 14px;

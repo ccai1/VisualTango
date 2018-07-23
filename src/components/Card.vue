@@ -147,7 +147,7 @@
   </div>
   <div v-else
     class="card"
-    style="color: gray; cursor: pointer;"
+    style="color: #2c3e50; cursor: pointer;"
   >
     + add new
   </div>
@@ -258,7 +258,7 @@ export default {
     'timeDelay',
 
     // callback to update card
-    'submitChanges'
+    'submitChanges',
   ],
   methods: {
     onChangeData (event) {
@@ -309,7 +309,8 @@ export default {
   top: 2%;
   left: 2%;
   bottom: 2%;
-  background-color: #FFEBCD;
+  background-color: #FFFAF0;
+  color: #2c3e50;
   box-shadow: 0px 0px 5px 1px gray;
   border-radius: 3px;
 }

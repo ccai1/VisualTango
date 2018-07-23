@@ -1,13 +1,12 @@
-<!-- DELETE BUTTON DOESN'T work
+<!--
 MOVES NOT DRAGGABLE
-TOP HTML DOESN'T WORK
 do clear and download buttons
  -->
 
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-  <h3>Move {{this.moveIndex + 1}}</h3>
+  <h3 v-if="this.moveIndex != null">Move {{this.moveIndex + 1}}</h3>
   <Dragglable v-model="this.cards" :list="this.cards">
       <Card v-for="(card, index) in this.cards"
         :key="index"
@@ -47,7 +46,14 @@ do clear and download buttons
           class="side-button"
           style="border: 5px; background-color: #DC143C"
           @click="removeThisMove()"
+          v-if="!this.isSample"
     >delete</button>
+    <button
+          class="side-button"
+          style="border: 5px; background-color: green"
+          @click="addThisMove()"
+          v-if="this.isSample"
+    >add</button>
     <br>
   </div>
 </template>
@@ -75,6 +81,7 @@ export default {
     'handleOneMove',
     'removeOneMove',
     'addMove',
+    'isSample',
   ],
   data() {
     return {
@@ -130,6 +137,13 @@ export default {
     removeThisMove () {
       console.log('the first one is', this.cards[0].title)
       this.removeOneMove(this.moveIndex)
+    },
+    addThisMove () {
+      let move = {
+        cards: Array.from(this.cards, x => x),
+        isSample: 'false',
+      }
+      this.addMove(move)
     },
     insertCardAfter (index, after) {
       if (index !== after && index >= 0 && index <= this.cards.length - 1 && after >= 0 && after <= this.cards.length - 1) {

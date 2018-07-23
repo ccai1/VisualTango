@@ -264,7 +264,8 @@ export default {
   left: 22.8%;
 }
 .sidePanel-container {
-  height: 99%;
+  height: 98%;
+  padding-top: 0.5%;
   width: 22%;
   overflow: scroll;
 }
