@@ -62,7 +62,7 @@
 
       <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #FFD700" @click="onClickSubmitChanges">submit</button>
       <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #F8F8FF" @click="onClickCancelChanges">cancel</button>
-      <button class="card-button" style="border: 0px; background-color: #DC143C" @click="removeCard(index)">remove</button>
+      <button class="card-button" style="border: 0px; background-color: #DC143C; color: white;" @click="removeCard(index)">remove</button>
       <br /><br />
     </div>
   </div>

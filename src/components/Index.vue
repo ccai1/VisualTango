@@ -9,13 +9,28 @@
     <!-- <Move @add-move="addMove"></Move>
     <Move @add-move="addMove"></Move>
     <Move @add-move="addMove"></Move> -->
+    <h2>&#x219e
+    <button
+        class="basic-button"
+        style="border: 5px; background-color: #2554C7; color: white"
+    >library</button>
+    </h2>
       <div class="move-container">
-        <Move v-for="(move, index) in this.listOfMoves"
-        :index="index"
+      <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
+        <Move v-for="(move, moveIndex) in this.listOfMoves"
+        :key="index"
+        :moveIndex="moveIndex"
         :listOfCards="move.listOfCards"
         :handleOneMove="handleOneMove"
+        :removeOneMove="removeOneMove"
         >
         </Move>
+      </Dragglable><br>
+      <button
+            class="basic-button"
+            style="border: 5px; background-color: green; color: white"
+            @click="addNewMove()"
+      >add new move</button><br><br>
       </div>
     <!-- <button @click="reverse">Reverse</button> -->
 
@@ -62,6 +77,7 @@ import { validateCard, matchFrameIndex } from '../helper/cardHelper'
 import preloadData from '../../static/preload.json'
 import { download } from '../helper/fileHelper'
 import axios from 'axios'
+import Dragglable from 'vuedraggable'
 
 export default {
   data () {
@@ -79,7 +95,6 @@ export default {
   },
   created() {
     if (this.listOfMoves.length === 0) {
-      console.log('created called')
       for (let i = 0; i < 3; i+=1) {
         let move = {
           listOfCards: Array.from(preloadData, x => x),
@@ -128,7 +143,8 @@ export default {
   components: {
     'MainFrame': MainFrame,
     'RoundButton': RoundButton,
-    'Move': Move
+    'Move': Move,
+    'Dragglable': Dragglable,
   },
   // events: {
   //   addMove (move) {
@@ -158,6 +174,19 @@ export default {
     //     this.handleOneMove(oneMove)
     //   }
     // },
+    addNewMove() {
+      let move = {
+        listOfCards: Array.from(preloadData, x => x),
+        index: this.listOfMoves.length,
+      }
+      //console.log('this is one move', move)
+      this.addMove(move)
+    },
+    removeOneMove(index) {
+      if (index >= 0 && index <= this.listOfMoves.length - 1) {
+        this.listOfMoves.splice(index, 1)
+      }
+    },
     handleOneMove(oneMove) {
       // set playing flag and counter
       if (oneMove.length > 0) {
@@ -242,7 +271,7 @@ export default {
     //   setTimeout(this.handleMoveButton(), 7000)
     // },
     handleClearButton () {
-      this.cards = []
+      this.listOfCards = []
       this.playFrame = 0
     },
     handleTypingButton () {
@@ -250,7 +279,7 @@ export default {
     },
     handleDownloadButton () {
       if (!this.playing) {
-        download('poses', this.cards)
+        download('poses', this.listOfCards)
       }
     },
     handleUploadButton () {
@@ -307,8 +336,13 @@ export default {
 .move-container {
   width: 22%;
   top: 1%;
-  height: 99%;
+  height: 88%;
   overflow: scroll;
+}
+.basic-button {
+  border-radius: 3px;
+  box-shadow: 0px 0px 3px 3px gray;
+  font-size: 14px;
 }
 
 </style>

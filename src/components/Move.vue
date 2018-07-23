@@ -1,9 +1,13 @@
+<!-- DELETE BUTTON DOESN'T work
+MOVES NOT DRAGGABLE -->
+
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
   <div class="moves">
-  <h3> Move {{this.index + 1}}</h3>
+  <h3> Move {{this.moveIndex + 1}}</h3>
       <SidePanel
+        :moveIndex="moveIndex"
         :cards="this.cards"
         :addCard="addCard"
         :removeCard="removeCard"
@@ -14,6 +18,7 @@
         :enableTyping="this.enableTyping"
         :submitChanges="submitChanges"
         :handleOneMove="handleOneMove"
+        :removeOneMove="removeOneMove"
       ></SidePanel>
   </div>
 </div>
@@ -34,8 +39,9 @@ export default {
   props: [
     // a list of cards
     'listOfCards',
-    'index',
+    'moveIndex',
     'handleOneMove',
+    'removeOneMove',
   ],
   data() {
     return {
@@ -91,9 +97,6 @@ export default {
       console.log(err)
     }
   },
-  // updated() {
-  //   this.$emit('add-move', this.cards)
-  // },
   methods: {
     // add a new card element to the list
     insertCardAfter (index, after) {

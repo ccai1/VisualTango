@@ -37,8 +37,13 @@
     <button
           class="side-button"
           style="border: 5px; background-color: #1E90FF"
-          @click="testingOneMove()"
+          @click="testingThisMove()"
     >move</button>
+    <button
+          class="side-button"
+          style="border: 5px; background-color: #DC143C"
+          @click="removeThisMove()"
+    >delete</button>
   </div>
 </center>
 </template>
@@ -51,7 +56,7 @@ export default {
   props: [
     // a list of cards
     'cards',
-
+    'moveIndex',
     // modify card list
     'addCard',
     'removeCard',
@@ -71,15 +76,21 @@ export default {
     // update
     'submitChanges',
     'handleOneMove',
+    'removeOneMove',
+
   ],
   components: {
     'Card': Card,
     'Dragglable': Dragglable
   },
   methods: {
-    testingOneMove (){
+    testingThisMove () {
       this.handleOneMove(this.cards)
-    }
+    },
+    removeThisMove () {
+      console.log('the first one is', this.cards[0].title)
+      this.removeOneMove(this.moveIndex)
+    },
   }
 }
 </script>
