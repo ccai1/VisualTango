@@ -1,7 +1,14 @@
 VisualTango
 ===========
 
-<strong>NOTE: this web app is only tested in Chrome, some features seem not working in incognito mode.</strong>
+<strong>
+NOTE: this web app is only tested in Chrome, some features seem not working in incognito mode.<br>
+TO-DO:
+  <ul>
+  <li>html</li>
+  <li>buttons</li>
+  </ul>
+</strong>
 
 ## Table of Contents
 
