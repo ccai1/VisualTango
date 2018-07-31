@@ -27,7 +27,7 @@
       </div>
     </header> -->
 
-    <h2>Your Dance</h2>
+    <h2>Your Routine</h2>
 
     <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
       <Move v-for="(move, moveIndex) in this.listOfMoves"

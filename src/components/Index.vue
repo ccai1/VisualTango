@@ -10,6 +10,7 @@
     >library</button> -->
       <div class="sidePanel-container">
         <SidePanel
+          float="left"
           :listOfMoves="listOfMoves"
           :handleOneMove="handleOneMove"
         ></SidePanel>
@@ -40,6 +41,14 @@
     </div>
     <!-- <Move v-bind:listOfCards="this.listOfMoves[0]"></Move>
     <Move v-bind:listOfCards="this.listOfMoves[1]"></Move> -->
+
+    <div class="sidePanel-container">
+      <SidePanel
+        float="right"
+        :listOfMoves="listOfMoves"
+        :handleOneMove="handleOneMove"
+      ></SidePanel>
+    </div>
 
   </div>
 </template>
