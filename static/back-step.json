@@ -1,0 +1,6 @@
+[{"type":"card","title":"move 1","initialized":true,"expended":false,"direction":"north","height":"high","weighted":"left","unweighted":"collected","leaning":"neutral","delay":"0.1"}
+  ,{"type":"card","title":"move 2","initialized":true,"expended":false,"direction":"north","height":"high","weighted":"left","unweighted":"backward","leaning":"neutral","delay":"0.1"}
+  ,{"type":"card","title":"move 3","initialized":true,"expended":false,"direction":"north","height":"high","weighted":"right","unweighted":"forward","leaning":"neutral","delay":"0.1"}
+  ,{"type":"card","title":"move 4","initialized":true,"expended":false,"direction":"north","height":"high","weighted":"right","unweighted":"backward","leaning":"neutral","delay":"0.1"}
+  ,{"type":"card","title":"move 5","initialized":true,"expended":true,"direction":"north","height":"high","weighted":"left","unweighted":"forward","leaning":"neutral","delay":"0.1"}
+  ,{"type":"card","title":"move 6","initialized":true,"expended":false,"direction":"north","height":"high","weighted":"left","unweighted":"collected","leaning":"neutral","delay":"0.1"}]
