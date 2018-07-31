@@ -178,3 +178,5 @@ for direction in ["north", "northwest", "northeast"]:
 
                     # insert into a new frame
                     bpy.ops.anim.keyframe_insert_menu(type='WholeCharacter')
+
+

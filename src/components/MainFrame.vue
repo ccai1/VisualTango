@@ -15,7 +15,8 @@ export default {
       camera: undefined,
       control: undefined,
       renderer: undefined,
-      mixer: undefined,
+      mixer0: undefined,
+      mixer1: undefined,
       prevFrame: 0
     }
   },
@@ -58,17 +59,18 @@ export default {
     // add a plane as floor
     let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8)
     let groundMaterial = new THREE.MeshStandardMaterial({
-      color: 0x5f9ea0,
+      color: 0x966f33,
       side: THREE.DoubleSide,
       metalness: 0.0
     })
     let ground = new THREE.Mesh(groundGeometry, groundMaterial)
-    ground.rotateX(-Math.PI / 2)
+    ground.rotateX(- Math.PI / 2)
+    ground.rotateZ(- Math.PI / 4)
     this.scene.add(ground)
 
     // add stickman model
-    let loader = new THREE.JSONLoader()
-    loader.load('static/model/stickman.json', (geometry) => {
+    let loader0 = new THREE.JSONLoader()
+    loader0.load('static/model/stickman.json', (geometry) => {
       let female = new THREE.SkinnedMesh(geometry,
         new THREE.MeshStandardMaterial({
           color: 0xff0080,
@@ -76,18 +78,53 @@ export default {
           metalness: 0.0
         })
       )
+
+      female.position.x = 1
+      female.position.z = 4
+      female.rotation.y = 5 * Math.PI / 4
+
       this.scene.add(female)
 
-      this.mixer = new THREE.AnimationMixer(female)
+      this.mixer0 = new THREE.AnimationMixer(female)
       let clips = geometry.animations
       let clip = clips[0]
-      let cycle = this.mixer.clipAction(clip)
+      let cycle = this.mixer0.clipAction(clip)
       cycle.play()
 
       // use standing as the initial pose
-      console.log('initial frame: ', this.playFrame)
-      this.mixer.update(this.playFrame || 0)
+      console.log('initial frame 0: ', this.playFrame)
+      this.mixer0.update(this.playFrame || 0)
       this.prevFrame = this.playFrame || 0
+    })
+
+    let loader1 = new THREE.JSONLoader()
+    loader1.load('static/model/stickman.json', (geometry) => {
+      let male = new THREE.SkinnedMesh(geometry,
+        new THREE.MeshStandardMaterial({
+          color: 0x39b7cd,
+          skinning: true,
+          metalness: 0.0
+        })
+      )
+
+      male.position.x = 0
+      male.position.z = 1
+      male.rotation.y = Math.PI / 4
+
+      this.scene.add(male)
+      // this.scene.add(male)
+
+      this.mixer1 = new THREE.AnimationMixer(male)
+      let clips = geometry.animations
+      let clip = clips[0]
+      let cycle = this.mixer1.clipAction(clip)
+      cycle.play()
+
+      // use standing as the initial pose
+      console.log('initial frame 1: ', this.playFrame)
+      this.mixer1.update(this.playFrame || 0)
+      this.prevFrame = this.playFrame || 0
+
     })
 
     this.animate()
@@ -95,7 +132,8 @@ export default {
   watch: {
     playFrame: function (val) {
       console.log('switch to frame: ', val)
-      this.mixer.update((val - this.prevFrame) || (-this.prevFrame))
+      this.mixer0.update((val - this.prevFrame) || (-this.prevFrame))
+      this.mixer1.update((val - this.prevFrame) || (-this.prevFrame))
       this.prevFrame = val
     }
   },
