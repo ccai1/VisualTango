@@ -1,13 +1,8 @@
 <template>
   <div class="index">
     <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-    <MainFrame :playFrame="this.playFrame" ></MainFrame>
+    <MainFrame :playFrame="this.playFrame" :cPlayFrame="this.cPlayFrame"></MainFrame>
 
-    <!-- <button
-        class="basic-button"
-        style="border: 5px; background-color: #2554C7; color: white"
-        @click="this.$router.push('')"
-    >library</button> -->
       <div class="sidePanel-container">
         <SidePanel
           float="left"
@@ -39,8 +34,6 @@
         :onClickHandler="handleUploadButton"
       ></RoundButton>
     </div>
-    <!-- <Move v-bind:listOfCards="this.listOfMoves[0]"></Move>
-    <Move v-bind:listOfCards="this.listOfMoves[1]"></Move> -->
 
     <div class="sidePanel-container">
       <SidePanel
@@ -58,6 +51,7 @@ import MainFrame from './MainFrame.vue'
 import RoundButton from './RoundButton.vue'
 import { isCookieEnabled, getCookie, setCookie } from 'tiny-cookie'
 import { validateCard, matchFrameIndex } from '../helper/cardHelper'
+import Mapping from '../helper/animationMapping'
 import { download } from '../helper/fileHelper'
 import axios from 'axios'
 import SidePanel from './SidePanel'
@@ -69,11 +63,12 @@ export default {
       enableTyping: false,
       // playing
       playing: false,
-      currentCard: 0,
+      currentCardIndex: 0,
+      currentCard: undefined,
       currentMove: 0,
       clock: (new Date()).getTime(), // millieseconds since 1970-1-1
-      playFrame: 0
-
+      playFrame: 0,
+      cPlayFrame: 0,
     }
   },
   mounted () {
@@ -114,18 +109,37 @@ export default {
     'RoundButton': RoundButton,
     'SidePanel': SidePanel,
   },
-  // events: {
-  //   addMove (move) {
-  //     console.log('move added')
-  //     this.listOfMoves.push(move)
-  //     console.log('listOfMoves is of length', listOfMoves.length)
-  //   },
-  // },
   methods: {
-    // button handlers
-    // addMove(moves) {
-    //   this.listOfMoves = moves
-    // }
+    findComplement(card) {
+
+        // bunch of matching stuff
+        let frame = 0
+        if (card == undefined) {
+          frame = 0
+        }
+        else {
+          let direction = card.direction
+          let height = card.height //will need to adjust
+          let weighted = card.weighted //will need to adjust
+          if (card.weighted === 'left') {
+            weighted = 'right' }
+          else {
+            weighted = 'left'}
+
+          let unweighted = card.unweighted
+          let leaning = 'neutral'
+
+          // if (card.leaning === 'forward') {
+          //   leaning = 'backward'
+          // }
+          // else {
+          //   leaning = 'forward'
+          // }
+
+          frame = parseInt(Mapping[direction][height][weighted][unweighted][leaning])
+        }
+        return frame
+    },
     handleDanceButton () {
       var cur = 0
       // for (let i = 0; i < this.listOfMoves.length; i++) {
@@ -159,7 +173,7 @@ export default {
       // set playing flag and counter
       if (oneMove.length > 0) {
         this.playing = true
-        this.currentCard = 0
+        this.currentCardIndex = 0
         this.inserting = false
         // close expended panel
         for (let i = 0; i < oneMove.length; i++) {
@@ -171,25 +185,28 @@ export default {
         // start playing
         let move = () => {
           // get the delay of the current card
-          let currentDelay = parseFloat(oneMove[this.currentCard].delay)
+          let currentDelay = parseFloat(oneMove[this.currentCardIndex].delay)
           // convert into millieseconds
           let currentDelayMilli = currentDelay * 1000
           // get current time
           let currentClock = (new Date()).getTime()
           //time spent on this card is >= specified delay
           if (currentClock - this.clock >= currentDelayMilli) { // should end current card
-            if (this.currentCard + 1 === oneMove.length) { //if last card in stack, end
+            if (this.currentCardIndex + 1 === oneMove.length) { //if last card in stack, end
               // end playing
               console.log('play end')
               this.playing = false
               this.playFrame = 0
+              this.cPlayFrame = 0
             } else { //if not last card, go to the next card
-              //console.log('current card', this.currentCard)
+              //console.log('current card', this.currentCardIndex)
               // reset timer
-              this.currentCard += 1
+              this.currentCardIndex += 1
               this.clock = (new Date()).getTime()
-              this.playFrame = matchFrameIndex(oneMove[this.currentCard])
-              console.log('play card: ', this.currentCard)
+              this.currentCard = oneMove[this.currentCardIndex]
+              this.playFrame = matchFrameIndex(this.currentCard)
+              this.cPlayFrame = this.findComplement(this.currentCard)
+              console.log('play card: ', this.currentCardIndex)
               setTimeout(move, 1)
             }
           } else {
@@ -201,7 +218,8 @@ export default {
 
         // go!
         this.clock = (new Date()).getTime() // set the first timer
-        this.playFrame = matchFrameIndex(oneMove[this.currentCard])
+        this.playFrame = matchFrameIndex(oneMove[this.currentCardIndex])
+        this.cPlayFrame = this.findComplement(this.currentCard)
         move()
       }
     },
@@ -212,6 +230,7 @@ export default {
     handleClearButton () {
       this.cards = []
       this.playFrame = 0
+      this.cPlayFrame = 0
     },
     handleTypingButton () {
       this.enableTyping = !this.enableTyping

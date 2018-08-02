@@ -6,6 +6,7 @@
 <script>
 // load THREE.js
 import * as THREE from 'three'
+import { matchFrameIndex } from '../helper/cardHelper'
 import OC from 'three-orbit-controls'
 
 export default {
@@ -17,7 +18,8 @@ export default {
       renderer: undefined,
       mixer0: undefined,
       mixer1: undefined,
-      prevFrame: 0
+      prevFrame0: 0,
+      prevFrame1: 0,
     }
   },
   mounted () {
@@ -94,7 +96,7 @@ export default {
       // use standing as the initial pose
       console.log('initial frame 0: ', this.playFrame)
       this.mixer0.update(this.playFrame || 0)
-      this.prevFrame = this.playFrame || 0
+      this.prevFrame0 = this.playFrame || 0
     })
 
     let loader1 = new THREE.JSONLoader()
@@ -121,9 +123,9 @@ export default {
       cycle.play()
 
       // use standing as the initial pose
-      console.log('initial frame 1: ', this.playFrame)
-      this.mixer1.update(this.playFrame || 0)
-      this.prevFrame = this.playFrame || 0
+      console.log('initial frame 1: ', this.cPlayFrame)
+      this.mixer1.update(this.cPlayFrame || 0)
+      this.prevFrame1 = this.cPlayFrame || 0
 
     })
 
@@ -132,18 +134,25 @@ export default {
   watch: {
     playFrame: function (val) {
       console.log('switch to frame: ', val)
-      this.mixer0.update((val - this.prevFrame) || (-this.prevFrame))
-      this.mixer1.update((val - this.prevFrame) || (-this.prevFrame))
-      this.prevFrame = val
-    }
+      this.mixer0.update((val - this.prevFrame0) || (-this.prevFrame0))
+      this.prevFrame0 = val
+    },
+    cPlayFrame: function (val) {
+      console.log('switch to frame: ', val)
+      this.mixer1.update((val - this.prevFrame1) || (-this.prevFrame1))
+      this.prevFrame1 = val
+    },
   },
-  props: ['playFrame'],
+  props: [
+    'playFrame',
+    'cPlayFrame',
+  ],
   methods: {
     animate () {
       requestAnimationFrame(this.animate)
       this.control.update()
       this.renderer.render(this.scene, this.camera)
-    }
+    },
   }
 }
 </script>
