@@ -35,6 +35,14 @@
       ></RoundButton>
     </div>
 
+    <div class="sidePanel-container">
+      <SidePanel
+        float="right"
+        :listOfMoves="listOfMoves"
+        :handleOneMove="handleOneMove"
+      ></SidePanel>
+    </div>
+
   </div>
 </template>
 
