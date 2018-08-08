@@ -68,7 +68,6 @@ export default {
     let ground = new THREE.Mesh(groundGeometry, groundMaterial)
     ground.rotateX(- Math.PI / 2)
     ground.rotateZ(- Math.PI / 4)
-    ground.position.y = 2
     this.scene.add(ground)
 
     // add stickman model
@@ -84,7 +83,6 @@ export default {
 
       female.position.x = 1
       female.position.z = 4
-      female.position.y = 2
       female.rotation.y = 5 * Math.PI / 4
 
       this.scene.add(female)
@@ -113,7 +111,6 @@ export default {
 
       male.position.x = 0
       male.position.z = 1
-      male.position.y = 2
       male.rotation.y = Math.PI / 4
 
       this.scene.add(male)
