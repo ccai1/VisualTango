@@ -59,7 +59,7 @@ export default {
     this.scene.add(light5)
 
     // add a plane as floor
-    let groundGeometry = new THREE.PlaneGeometry(20, 20, 8, 8)
+    let groundGeometry = new THREE.PlaneGeometry(18, 18, 8, 8)
     let groundMaterial = new THREE.MeshStandardMaterial({
       color: 0x966f33,
       side: THREE.DoubleSide,
@@ -68,6 +68,7 @@ export default {
     let ground = new THREE.Mesh(groundGeometry, groundMaterial)
     ground.rotateX(- Math.PI / 2)
     ground.rotateZ(- Math.PI / 4)
+    ground.position.y = 2
     this.scene.add(ground)
 
     // add stickman model
@@ -83,6 +84,7 @@ export default {
 
       female.position.x = 1
       female.position.z = 4
+      female.position.y = 2
       female.rotation.y = 5 * Math.PI / 4
 
       this.scene.add(female)
@@ -94,9 +96,9 @@ export default {
       cycle.play()
 
       // use standing as the initial pose
-      console.log('initial frame 0: ', this.playFrame)
-      this.mixer0.update(this.playFrame || 0)
-      this.prevFrame0 = this.playFrame || 0
+      console.log('initial frame 0: ', this.cPlayFrame)
+      this.mixer0.update(this.cPlayFrame || 0)
+      this.prevFrame0 = this.cPlayFrame || 0
     })
 
     let loader1 = new THREE.JSONLoader()
@@ -111,6 +113,7 @@ export default {
 
       male.position.x = 0
       male.position.z = 1
+      male.position.y = 2
       male.rotation.y = Math.PI / 4
 
       this.scene.add(male)
@@ -123,9 +126,9 @@ export default {
       cycle.play()
 
       // use standing as the initial pose
-      console.log('initial frame 1: ', this.cPlayFrame)
-      this.mixer1.update(this.cPlayFrame || 0)
-      this.prevFrame1 = this.cPlayFrame || 0
+      console.log('initial frame 1: ', this.playFrame)
+      this.mixer1.update(this.playFrame || 0)
+      this.prevFrame1 = this.playFrame || 0
 
     })
 
