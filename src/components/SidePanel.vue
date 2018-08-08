@@ -37,6 +37,8 @@
       :handleOneMove="handleOneMove"
       :removeOneMove="removeOneMove"
       :addMove="addMove"
+      :isSample='false'
+      :findComplement="findComplement"
       >
       </Move>
 
@@ -58,11 +60,13 @@ import Slideout from 'vue-slideout'
 import Move from './Move.vue'
 import preloadData from '../../static/preload.json'
 import Library from './Library.vue'
+import {$,jQuery} from 'jquery'
 
 export default {
   props: [
     'listOfMoves',
     'handleOneMove',
+    'findComplement',
   ],
   components: {
     'Move': Move,
@@ -71,21 +75,14 @@ export default {
     'Slideout': Slideout,
     'Library': Library,
   },
-  mounted() {
+  created() {
     if (this.listOfMoves.length === 0) {
       for (let i = 0; i < 3; i+=1) {
-        let move = {
-          cards: Array.from(preloadData, x => x),
-          moveIndex: i,
-          isSample: 'false',
-        }
-        console.log('this is one move', move)
+        let move = this.preloadCopy()
+        move.moveIndex = i
         this.addMove(move)
       }
     }
-    console.log(this.$children[0].slideout.isOpen());
-  //   // console.log('listOf 0',this.listOfMoves[0])
-  //   // console.log('listOf 1',this.listOfMoves[1])
   },
   methods: {
     logger() {
@@ -102,18 +99,23 @@ export default {
       this.listOfMoves = list
     },
     addNewMove() {
-      let move = {
-        cards: Array.from(preloadData, x => x),
-        index: this.listOfMoves.length,
-        isSample: 'false',
-      }
-      //console.log('this is one move', move)
-      this.addMove(move)
+      this.addMove(this.preloadCopy())
     },
     removeOneMove(index) {
       if (index >= 0 && index <= this.listOfMoves.length - 1) {
         this.listOfMoves.splice(index, 1)
       }
+    },
+    preloadCopy() {
+      let data = []
+      for (let j = 0; j < preloadData.length; j+=1) {
+        data.push(JSON.parse( JSON.stringify( preloadData[j] ) ))
+      }
+      let move = {
+        cards: data,
+        isSample: 'false',
+      }
+      return move
     },
   }
 }

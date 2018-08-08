@@ -1,13 +1,15 @@
 <template>
   <div class="index">
     <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-    <MainFrame :playFrame="this.playFrame" :cPlayFrame="this.cPlayFrame"></MainFrame>
+    <MainFrame :playFrame="this.playFrame" :cPlayFrame="this.cPlayFrame">
+    </MainFrame>
 
       <div class="sidePanel-container">
         <SidePanel
           float="left"
           :listOfMoves="listOfMoves"
           :handleOneMove="handleOneMove"
+          :findComplement="findComplement"
         ></SidePanel>
       </div>
 
@@ -35,13 +37,25 @@
       ></RoundButton>
     </div>
 
-    <div class="sidePanel-container">
-      <SidePanel
-        float="right"
-        :listOfMoves="listOfMoves"
-        :handleOneMove="handleOneMove"
-      ></SidePanel>
-    </div>
+    <form class="speed">
+    <fieldset>
+        <legend>Speed</legend>
+        <div>
+            <input type="radio" id="slow" name="drone" @click="slowSpeedHandler()"/>
+            <label for="slow">Slow</label>
+        </div>
+
+        <div>
+            <input type="radio" id="normal" name="drone" @click="normalSpeedHandler()" checked/>
+            <label for="normal">Normal</label>
+        </div>
+
+        <div>
+            <input type="radio" id="fast" name="drone" @click="fastSpeedHandler()"/>
+            <label for="fast">Fast</label>
+        </div>
+    </fieldset>
+  </form>
 
   </div>
 </template>
@@ -69,6 +83,7 @@ export default {
       clock: (new Date()).getTime(), // millieseconds since 1970-1-1
       playFrame: 0,
       cPlayFrame: 0,
+      speedFactor: 1,
     }
   },
   mounted () {
@@ -110,6 +125,15 @@ export default {
     'SidePanel': SidePanel,
   },
   methods: {
+    slowSpeedHandler() {
+      this.speedFactor = 2
+    },
+    normalSpeedHandler() {
+      this.speedFactor = 1
+    },
+    fastSpeedHandler() {
+      this.speedFactor = 0.5
+    },
     findComplement(card) {
 
         // bunch of matching stuff
@@ -185,7 +209,7 @@ export default {
         // start playing
         let move = () => {
           // get the delay of the current card
-          let currentDelay = parseFloat(oneMove[this.currentCardIndex].delay)
+          let currentDelay = parseFloat(oneMove[this.currentCardIndex].delay) * this.speedFactor
           // convert into millieseconds
           let currentDelayMilli = currentDelay * 1000
           // get current time
@@ -228,7 +252,7 @@ export default {
     //   setTimeout(this.handleMoveButton(), 7000)
     // },
     handleClearButton () {
-      this.cards = []
+      this.listOfMoves = []
       this.playFrame = 0
       this.cPlayFrame = 0
     },
@@ -237,7 +261,7 @@ export default {
     },
     handleDownloadButton () {
       if (!this.playing) {
-        download('poses', this.cards)
+        download('poses', this.listOfMoves)
       }
     },
     handleUploadButton () {
@@ -296,5 +320,13 @@ export default {
   padding-top: 0.5%;
   width: 22%;
   overflow: scroll;
+}
+.speed {
+  position: absolute;
+  float: right;
+  z-index: 999;
+  top: 2%;
+  left: 90.5%;
+  color: white;
 }
 </style>

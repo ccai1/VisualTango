@@ -145,7 +145,7 @@
       <br /><br />
     </div>
   </div>
-  <div v-else
+  <div v-else-if="!isSample"
     class="card"
     style="color: #2c3e50; cursor: pointer;"
   >
@@ -259,6 +259,10 @@ export default {
 
     // callback to update card
     'submitChanges',
+
+    //in library?
+    'isSample',
+
   ],
   methods: {
     onChangeData (event) {

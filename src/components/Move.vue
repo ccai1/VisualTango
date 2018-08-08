@@ -26,6 +26,7 @@ do clear and download buttons
         :expendCard="expendCard"
         :enableTyping="enableTyping"
         :submitChanges="submitChanges"
+        :isSample="isSample"
       >
       </Card>
   </Dragglable>
@@ -70,18 +71,19 @@ import Dragglable from 'vuedraggable'
 
 export default {
   components: {
-    'SidePanel': SidePanel,
-    'Card': Card,
-    'Dragglable': Dragglable,
+    'Card': Card,  //list of Cards make up one Move
+    'SidePanel': SidePanel, //list of Moves make up one SidePanel
+    'Dragglable': Dragglable, //(to make the moves draggable)
   },
   props: [
     // a list of cards
-    'cards',
-    'moveIndex',
-    'handleOneMove',
-    'removeOneMove',
-    'addMove',
-    'isSample',
+    'cards', //which poses make up the move?
+    'moveIndex', //what is this move's index in the list of Moves?
+    'handleOneMove', //function to play one move
+    'removeOneMove', //function to remove one move from the list
+    'addMove', //function to add one move to the list
+    'isSample', //is this move a standard Tango move?
+    'findComplement',
   ],
   data() {
     return {
@@ -90,6 +92,7 @@ export default {
       playing: false,
       currentCard: 0,
       inserting: false,
+      playFrame: 0,
     }
   },
   mounted () {
@@ -108,6 +111,9 @@ export default {
     } catch (err) {
       console.log(err)
     }
+    //
+    // console.log(this.cards)
+    // console.log('and', this.isSample)
     // this.$parent.listOfMoves.push(this.cards)
     // console.log('this.cards after', this.cards)
     // console.log('this.listOfCards after', this.listOfCards)
@@ -159,6 +165,18 @@ export default {
         this.cards.splice(insertAfter + 1, 0, element)
       }
     },
+    expendCard (index) {
+      if (!this.playing && index >= 0 && index < this.cards.length) {
+        for (let i = 0; i < this.cards.length; i++) {
+          this.cards[i].expended = false
+        }
+        this.cards[index].expended = true
+        //console.log('here', this.cards)
+        console.log('expended', index)
+        this.playFrame = matchFrameIndex(this.cards[index])
+        this.cPlayFrame = this.findComplement(this.cards[index])
+      }
+    },
     addCard (name, direction, height, weighted, unweighted, leaning, delay) {
       let card = {
         type: 'card',
@@ -193,15 +211,6 @@ export default {
     },
     onClickAddNewCancel () {
       this.inserting = false
-    },
-    expendCard (index) {
-      if (!this.playing && index >= 0 && index < this.cards.length) {
-        for (let i = 0; i < this.cards.length; i++) {
-          this.cards[i].expended = false
-        }
-        this.cards[index].expended = true
-        this.playFrame = matchFrameIndex(this.cards[index])
-      }
     },
     // card update functions
     submitChanges (index, changes) {

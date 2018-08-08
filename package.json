@@ -12,6 +12,7 @@
     "deploy": "npm run build; push-dir --dir=dist --branch=master --cleanup"
   },
   "dependencies": {
+    "jquery": "^3.3.1",
     "npm": "^5.8.0",
     "promise-polyfill": "^8.0.0",
     "rxjs": "^6.2.2",
