@@ -137,17 +137,17 @@ export default {
   padding-top: 11%;
 }
 .slideout-menu {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 256px;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  z-index: 0;
-  display: none;
-  background-color: #FFFAF0;
-  color: #2c3e50;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 256px;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    z-index: 0;
+    display: none;
+    background-color: #FFFAF0;
+    color: #2c3e50;
   }
   .slideout-menu-left {
     left: 0;
