@@ -3,27 +3,19 @@
     <button class="lib-button">&#x21A0; back </button>
     <h2> Library </h2>
 
-    <h3> The Cross </h3>
-    <Move
-      :cards="Array.from(cross, x => x)"
-      :handleOneMove="handleOneMove"
-      :addMove="addMove"
-      :isSample='true'
-    ></Move>
-    <h3> Back Step </h3>
-    <Move
-      :cards="Array.from(backStep, x => x)"
-      :handleOneMove="handleOneMove"
-      :addMove="addMove"
-      :isSample='true'
-    ></Move>
-    <h3> Side Step </h3>
-    <Move
-      :cards="Array.from(sideStep, x => x)"
-      :handleOneMove="handleOneMove"
-      :addMove="addMove"
-      :isSample='true'
-    ></Move><br>
+    <Move v-for="(move, moveIndex) in this.listOfSamples"
+    :name="move.name"
+    :maleCards="move.cards"
+    :moveIndex="moveIndex"
+    :handleOneMove="handleOneMove"
+    :addMove="addMove"
+    :isSample='true'
+    :findComplement="findComplement"
+    :updatePlayFrame="updatePlayFrame"
+    :sampleMove="moveIndex"
+    :updatePlayFrameSample="updatePlayFrameSample"
+    >
+  </Move><br>
   </div>
 
 </template>
@@ -31,14 +23,16 @@
 <script>
 import Move from './Move.vue'
 import preloadData from '../../static/preload.json'
-import cross from '../../static/cross.json'
-import backStep from '../../static/back-step.json'
-import sideStep from '../../static/side-step.json'
 
 export default {
   props: [
     'handleOneMove',
     'addMove',
+    'findComplement',
+    'updatePlayFrame',
+    'moveIndex',
+    'updatePlayFrameSample',
+    'listOfSamples',
   ],
   components: {
     'Move': Move,

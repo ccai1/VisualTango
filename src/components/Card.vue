@@ -1,3 +1,19 @@
+<!--
+
+1. copy and paste
+copy and paste works, except title is weird
+**addThisCard is not a function
+
+2. expended
+  expended doesn't work but pose button does
+
+3. male/female
+femaleCards correctly created but
+  a. for some reason, female cards don't expend?
+  b. editing female cards = changing cPlayFrame
+  c. editing HTML
+-->
+
 <template>
 
   <!-- one card -->
@@ -8,7 +24,8 @@
 
   <!-- card name -->
 
-    <strong>{{ this.title }}</strong><br />
+    <strong>title: </strong> <input type="text" v-model="name" style="width: 55px" @change="onChangeData" /><br />
+
     <div style="text-align: left; padding-left: 5px">
 
       <!-- direction -->
@@ -60,9 +77,12 @@
 
       <strong>delay:</strong> <input type="text" v-model="delay" style="width: 40px" @change="onChangeData" /> sec<br />
 
-      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #FFD700" @click="onClickSubmitChanges">submit</button>
-      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #F8F8FF" @click="onClickCancelChanges">cancel</button>
+      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #1BBC9B" @click="onClickSubmitChanges">submit</button>
+      <button v-if="this.hasChanges" class="card-button" style="border: 0px; background-color: #1BBC9B; color: black;" @click="onClickCancelChanges">cancel</button>
+      <button v-if="isSample" class="card-button" style="border: 0px; background-color: #FF5c00; color: white;" @click="updatePlayFrameSample(sampleMove, index)">pose</button>
+      <button v-if="!isSample" class="card-button" style="border: 0px; background-color: #FF5c00; color: white;" @click="updatePlayFrame(moveIndex, index)">pose</button>
       <button class="card-button" style="border: 0px; background-color: #DC143C; color: white;" @click="removeCard(index)">remove</button>
+      <button class="card-button" style="border: 0px; background-color: #FFD700; color: black;" @click="copyCard(moveIndex, index)">copy</button>
       <br /><br />
     </div>
   </div>
@@ -75,7 +95,7 @@
     @click="expendCard(index)"
     style="cursor: pointer"
   >
-    {{ this.title }}
+    {{ name }}
   </div>
   <div v-else-if="type === 'card' && !initialized"
     class="card"
@@ -127,19 +147,19 @@
       <button
         class="card-button"
         style="border: 0px; background-color: #228B22"
-        @click="onAddingNewSubmit(
+        @click="addThisCard(
           name,
           selected.direction,
           selected.height,
           selected.weighted,
           selected.unweighted,
           selected.leaning,
-          delay
-        )"
+          delay,
+          )"
       >submit</button>
       <button
         class="card-button"
-        style="border: 0px; background-color: #FFD700"
+        style="border: 0px; background-color: #DC143C"
         @click="onAddingNewCancel()"
       >cancel</button>
       <br /><br />
@@ -169,7 +189,7 @@ export default {
         height: 'high',
         weighted: 'left',
         unweighted: 'collected',
-        leaning: 'neutral'
+        leaning: 'neutral',
       },
       selectOptions: {
         direction: [
@@ -205,6 +225,9 @@ export default {
       }
     }
 
+    if (this.title) {
+      d.name = this.title
+    }
     if (this.timeDelay) {
       d.delay = this.timeDelay
     }
@@ -263,13 +286,52 @@ export default {
     //in library?
     'isSample',
 
+    // move index
+    'moveIndex',
+
+    'copyCard',
+
+    'poseCard',
+
+    'updatePlayFrame',
+
+    'addThisCard',
+
+    'sampleMove',
+
+    'updatePlayFrameSample',
+
+    'gender',
+
   ],
+  updated() {
+    console.log('I am changed', this.weighted)
+  },
+  watch: {
+    gender: function (val) {
+      this.$forceUpdate()
+    }
+  },
   methods: {
+    // submitNewCard(event) {
+    //   let newCard = {
+    //     name: this.selected.title,
+    //     direction: this.selected.direction,
+    //     height: this.selected.height,
+    //     weighted: this.selected.weighted,
+    //     unweighted: this.selected.unweighted,
+    //     leaning: this.selected.leaning,
+    //     delay: this.delay
+    //   }
+    //   console.log('newCard', newCard)
+    //   this.addNewCard(newCard)
+    // },
     onChangeData (event) {
       this.hasChanges = true
     },
     onClickSubmitChanges (event) {
       let changes = {
+        title: this.title,
         direction: this.selected.direction,
         height: this.selected.height,
         weighted: this.selected.weighted,
@@ -282,6 +344,9 @@ export default {
       }
     },
     onClickCancelChanges (event) {
+      if (this.title) {
+        this.title = this.title
+      }
       if (this.timeDelay) {
         this.delay = this.timeDelay
       }

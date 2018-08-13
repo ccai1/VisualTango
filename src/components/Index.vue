@@ -10,6 +10,9 @@
           :listOfMoves="listOfMoves"
           :handleOneMove="handleOneMove"
           :findComplement="findComplement"
+          :updatePlayFrame="updatePlayFrame"
+          :updatePlayFrameSample="updatePlayFrameSample"
+          :listOfSamples="listOfSamples"
         ></SidePanel>
       </div>
 
@@ -69,6 +72,9 @@ import Mapping from '../helper/animationMapping'
 import { download } from '../helper/fileHelper'
 import axios from 'axios'
 import SidePanel from './SidePanel'
+import cross from '../../static/cross.json'
+import backStep from '../../static/back-step.json'
+import sideStep from '../../static/side-step.json'
 
 export default {
   data () {
@@ -84,6 +90,7 @@ export default {
       playFrame: 0,
       cPlayFrame: 0,
       speedFactor: 1,
+      listOfSamples: [],
     }
   },
   mounted () {
@@ -99,15 +106,9 @@ export default {
     } catch (err) {
       console.log(err)
     }
-
-    // if (this.listOfMoves.length === 0) {
-    //   console.log('indexHere')
-    //   //console.log(preloadData)
-    //   //this.listOfMoves[0] = preloadData
-    //   //this.listOfMoves[1] = preloadData
-    //   //console.log(this.listOfMoves[0]) works
-    //   //console.log(this.listOfMoves[1])
-    // }
+    this.addSampleMove('Cross', cross)
+    this.addSampleMove('Back Step', backStep)
+    this.addSampleMove('Side Step', sideStep)
   },
   beforeUpdate () {
     // update to cookie
@@ -125,6 +126,29 @@ export default {
     'SidePanel': SidePanel,
   },
   methods: {
+    addSampleMove(title, move) {
+      let data = []
+      for (let j = 0; j < move.length; j+=1) {
+        data.push(JSON.parse( JSON.stringify( move[j] ) ))
+      }
+      let copiedMove = {
+        name: title,
+        cards: data,
+        isSample: 'true',
+      }
+      this.listOfSamples.push(copiedMove)
+    },
+    updatePlayFrame(moveIndex, index) {
+      let card = this.listOfMoves[moveIndex].cards[index]
+      this.playFrame = matchFrameIndex(card)
+      this.cPlayFrame = matchFrameIndex(this.findComplement(card))
+    },
+    updatePlayFrameSample(sampleMove, index) {
+      console.log('list is', this.listOfSamples)
+      let card = this.listOfSamples[sampleMove].cards[index]
+      this.playFrame = matchFrameIndex(card)
+      this.cPlayFrame = matchFrameIndex(this.findComplement(card))
+    },
     slowSpeedHandler() {
       this.speedFactor = 2
     },
@@ -136,12 +160,9 @@ export default {
     },
     findComplement(card) {
 
+        let cCard = 0
         // bunch of matching stuff
-        let frame = 0
-        if (card == undefined) {
-          frame = 0
-        }
-        else {
+        if (card != undefined) {
           let direction = card.direction
           let height = card.height //will need to adjust
           let weighted = card.weighted //will need to adjust
@@ -160,9 +181,21 @@ export default {
           //   leaning = 'forward'
           // }
 
-          frame = parseInt(Mapping[direction][height][weighted][unweighted][leaning])
+          cCard = {
+            type: 'card',
+            title: card.title,
+            initialized: true,
+            expended: card.expended,
+            direction: direction,
+            height: height,
+            weighted: weighted,
+            unweighted: unweighted,
+            leaning: leaning,
+            delay: card.delay
+          }
         }
-        return frame
+        return cCard
+
     },
     handleDanceButton () {
       var cur = 0
@@ -229,7 +262,7 @@ export default {
               this.clock = (new Date()).getTime()
               this.currentCard = oneMove[this.currentCardIndex]
               this.playFrame = matchFrameIndex(this.currentCard)
-              this.cPlayFrame = this.findComplement(this.currentCard)
+              this.cPlayFrame = matchFrameIndex(this.findComplement(this.currentCard))
               console.log('play card: ', this.currentCardIndex)
               setTimeout(move, 1)
             }
@@ -243,14 +276,10 @@ export default {
         // go!
         this.clock = (new Date()).getTime() // set the first timer
         this.playFrame = matchFrameIndex(oneMove[this.currentCardIndex])
-        this.cPlayFrame = this.findComplement(this.currentCard)
+        this.cPlayFrame = 0
         move()
       }
     },
-    // handleDanceButton () {
-    //   console.log('starting loop')
-    //   setTimeout(this.handleMoveButton(), 7000)
-    // },
     handleClearButton () {
       this.listOfMoves = []
       this.playFrame = 0

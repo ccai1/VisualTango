@@ -8,6 +8,10 @@
           :handleOneMove="handleOneMove"
           :listOfMoves="listOfMoves"
           :addMove="addMove"
+          :findComplement="findComplement"
+          :updatePlayFrame="updatePlayFrame"
+          :updatePlayFrameSample="updatePlayFrameSample"
+          :listOfSamples="listOfSamples"
         ></Library>
       </nav>
       <main id="panel">
@@ -32,16 +36,20 @@
     <Dragglable v-model="this.listOfMoves" :list="this.listOfMoves">
       <Move v-for="(move, moveIndex) in this.listOfMoves"
       :key="moveIndex"
-      :cards="move.cards"
+      :mCards="move.cards"
       :moveIndex="moveIndex"
       :handleOneMove="handleOneMove"
       :removeOneMove="removeOneMove"
       :addMove="addMove"
       :isSample='false'
       :findComplement="findComplement"
+      :copyCard="copyCard"
+      :pasteMoveHere="pasteMoveHere"
+      :addCard="addCard"
+      :updatePlayFrame="updatePlayFrame"
+      :changedCard="changedCard"
       >
-      </Move>
-
+    </Move>
     </Dragglable><br>
 
     <button
@@ -60,6 +68,7 @@ import Slideout from 'vue-slideout'
 import Move from './Move.vue'
 import preloadData from '../../static/preload.json'
 import Library from './Library.vue'
+import { validateCard, matchFrameIndex } from '../helper/cardHelper'
 import {$,jQuery} from 'jquery'
 
 export default {
@@ -67,6 +76,9 @@ export default {
     'listOfMoves',
     'handleOneMove',
     'findComplement',
+    'updatePlayFrame',
+    'updatePlayFrameSample',
+    'listOfSamples',
   ],
   components: {
     'Move': Move,
@@ -74,6 +86,11 @@ export default {
     'Dragglable': Dragglable,
     'Slideout': Slideout,
     'Library': Library,
+  },
+  data() {
+    return {
+      copiedCard: [],
+    }
   },
   created() {
     if (this.listOfMoves.length === 0) {
@@ -101,9 +118,48 @@ export default {
     addNewMove() {
       this.addMove(this.preloadCopy())
     },
+    addCard (name, direction, height, weighted, unweighted, leaning, delay, moveIndex) {
+      let card = {
+        type: 'card',
+        title: name.trim(),
+        initialized: true,
+        expended: false,
+        direction: direction.trim().replace(/\s+/g, '-'),
+        height: height.trim().replace(/\s+/g, '-'),
+        weighted: weighted.trim().replace(/\s+/g, '-'),
+        unweighted: unweighted.trim().replace(/\s+/g, '-'),
+        leaning: leaning.trim().replace(/\s+/g, '-'),
+        delay: delay
+      }
+      // validate
+      if (validateCard(card)) {
+        this.listOfMoves[moveIndex].cards.push(card)
+        this.inserting = false
+      }
+    },
+    copyCard(moveIndex, cardIndex) {
+      let card = this.listOfMoves[moveIndex].cards[cardIndex]
+      console.log('card is', card)
+      let newCard = JSON.parse( JSON.stringify( card ) )
+      console.log('new card is', newCard)
+      this.copiedCard = newCard
+    },
+    changedCard(moveIndex, changedCards) {
+      this.listOfMoves[moveIndex].cards = changedCards
+    },
     removeOneMove(index) {
       if (index >= 0 && index <= this.listOfMoves.length - 1) {
         this.listOfMoves.splice(index, 1)
+      }
+    },
+    pasteMoveHere(moveIndex) {
+      try {
+        let card = this.copiedCard
+        this.addCard(card.title, card.direction, card.height,
+          card.weighted, card.unweighted, card.leaning, card.delay, moveIndex)
+      }
+      catch (err) {
+        console.log(err)
       }
     },
     preloadCopy() {

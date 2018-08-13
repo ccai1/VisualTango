@@ -1,14 +1,22 @@
-<!--
-MOVES NOT DRAGGABLE
-do clear and download buttons
- -->
-
 <template>
   <div class="move">
   <input id="file-upload" ref="upload" type="file" style="display: none" @change="onChangeUpload" />
-  <h3 v-if="this.moveIndex != null">Move {{this.moveIndex + 1}}</h3>
+  <h3 v-if="!this.isSample">Move {{this.moveIndex + 1}}</h3>
+  <h3 v-else>{{this.name}}</h3>
+  <form class="gender">
+  <fieldset>
+      <div>
+          <input type="radio" id="slow" name="drone" @click="changeToMale()" checked/>
+          <label for="slow">Male</label>
+      </div>
+      <div>
+          <input type="radio" id="normal" name="drone" @click="changeToFemale()"/>
+          <label for="normal">Female</label>
+      </div>
+  </fieldset>
+</form>
   <Dragglable v-model="this.cards" :list="this.cards">
-      <Card v-for="(card, index) in this.cards"
+      <Card  v-for="(card, index) in this.cards"
         :key="index"
         :index="index"
         :id="'card-' + index"
@@ -27,6 +35,14 @@ do clear and download buttons
         :enableTyping="enableTyping"
         :submitChanges="submitChanges"
         :isSample="isSample"
+        :moveIndex="moveIndex"
+        :copyCard="copyCard"
+        :poseCard="poseCard"
+        :updatePlayFrame="updatePlayFrame"
+        :addThisCard="addThisCard"
+        :sampleMove="sampleMove"
+        :updatePlayFrameSample="updatePlayFrameSample"
+        :gender="gender"
       >
       </Card>
   </Dragglable>
@@ -49,6 +65,12 @@ do clear and download buttons
           @click="removeThisMove()"
           v-if="!this.isSample"
     >delete</button>
+    <button
+          class="side-button"
+          style="border: 5px; background-color: #FFD700; color: black"
+          @click="pasteMoveHere(moveIndex)"
+          v-if="!this.isSample"
+    >paste</button>
     <button
           class="side-button"
           style="border: 5px; background-color: green"
@@ -77,13 +99,21 @@ export default {
   },
   props: [
     // a list of cards
-    'cards', //which poses make up the move?
+    'name',
+    'mCards', //which poses make up the move?
     'moveIndex', //what is this move's index in the list of Moves?
     'handleOneMove', //function to play one move
     'removeOneMove', //function to remove one move from the list
     'addMove', //function to add one move to the list
     'isSample', //is this move a standard Tango move?
     'findComplement',
+    'copyCard',
+    'pasteMoveHere',
+    'addCard',
+    'updatePlayFrame',
+    'sampleMove',
+    'updatePlayFrameSample',
+    'changedCard',
   ],
   data() {
     return {
@@ -92,14 +122,30 @@ export default {
       playing: false,
       currentCard: 0,
       inserting: false,
-      playFrame: 0,
+      gender: 'male',
+      femaleCards: [],
+      maleCards: Array.from(this.mCards, x => x),
+      cards: [],
     }
+  },
+  watch: {
+    cards: function (val) {
+      this.$forceUpdate()
+      if (this.gender === 'male') {
+        this.maleCards = Array.from(this.cards, x => x)
+      }
+      else {
+        this.femaleCards = Array.from(this.cards, x => x)
+      }
+    }
+  },
+  updated() {
+    console.log('updated', this.cards)
   },
   mounted () {
     // see if cookie is enabled
     // console.log('this.cards', this.cards)
     // console.log('this.listOfCards', this.listOfCards)
-    this.$emit('add-move', this.cards)
     try {
       if (isCookieEnabled()) {
         let previousData = JSON.parse(getCookie('this.cards'))
@@ -111,19 +157,13 @@ export default {
     } catch (err) {
       console.log(err)
     }
-    //
-    // console.log(this.cards)
-    // console.log('and', this.isSample)
-    // this.$parent.listOfMoves.push(this.cards)
-    // console.log('this.cards after', this.cards)
-    // console.log('this.listOfCards after', this.listOfCards)
-    // if (this.cards.length === 0) {
-    //   //console.log('move')
-    //   //this.cards[0] = preloadData
-    //   //this.cards[1] = preloadData
-    //   this.cards = this.listOfCards
-    // }
+    for (let i = 0; i < this.maleCards.length; i++) {
+      let cCard = JSON.parse(JSON.stringify(this.findComplement(this.maleCards[i])))
+      this.femaleCards.push(cCard)
+    }
+    this.cards = this.maleCards
   },
+
   beforeUpdate () {
     // update to cookie
     //this.$emit('add-move', this.cards)
@@ -137,6 +177,33 @@ export default {
   },
   methods: {
     // add a new card element to the list
+    poseCard (index) {
+      this.$emit('update-play-frame', matchFrameIndex(this.cards[index]))
+    },
+    addThisCard (title, direction, height, weighted, unweighted, leaning, delay) {
+      console.log('moveIndex', this.moveIndex)
+      addCard(
+        title,
+        direction,
+        height,
+        weighted,
+        unweighted,
+        leaning,
+        delay,
+        this.moveIndex)
+    },
+    changeToMale() {
+      this.gender = 'male'
+      this.cards = this.maleCards
+      this.changedCard(this.moveIndex, this.cards)
+      console.log('male', this.cards)
+    },
+    changeToFemale() {
+      this.gender = 'female'
+      this.cards = this.femaleCards
+      this.changedCard(this.moveIndex, this.cards)
+      console.log('female', this.cards)
+    },
     testingThisMove () {
       this.handleOneMove(this.cards)
     },
@@ -175,26 +242,6 @@ export default {
         console.log('expended', index)
         this.playFrame = matchFrameIndex(this.cards[index])
         this.cPlayFrame = this.findComplement(this.cards[index])
-      }
-    },
-    addCard (name, direction, height, weighted, unweighted, leaning, delay) {
-      let card = {
-        type: 'card',
-        title: name.trim(),
-        initialized: true,
-        expended: false,
-        direction: direction.trim().replace(/\s+/g, '-'),
-        height: height.trim().replace(/\s+/g, '-'),
-        weighted: weighted.trim().replace(/\s+/g, '-'),
-        unweighted: unweighted.trim().replace(/\s+/g, '-'),
-        leaning: leaning.trim().replace(/\s+/g, '-'),
-        delay: delay
-      }
-      // validate
-      if (validateCard(card)) {
-        this.cards.push(card)
-        this.inserting = false
-        this.expendCard(this.cards.length - 1)
       }
     },
     // remove a card by index
@@ -268,5 +315,8 @@ export default {
   border-radius: 3px;
   box-shadow: 0px 0px 1px 1px gray;
   cursor: pointer;
+}
+.gender {
+  width: 98%;
 }
 </style>
