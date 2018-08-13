@@ -5,7 +5,7 @@
 
     <Move v-for="(move, moveIndex) in this.listOfSamples"
     :name="move.name"
-    :maleCards="move.cards"
+    :mCards="move.cards"
     :moveIndex="moveIndex"
     :handleOneMove="handleOneMove"
     :addMove="addMove"
